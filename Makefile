@@ -2,12 +2,13 @@
 DEVICE=ch552e
 CPU=CH552
 
+## RAM/ROM code size/map
+XRAM_SIZE = 0x0400
+XRAM_LOC = 0x0000
+CODE_SIZE = 0x3800
+
 ## A directory for common include files
 BSP = bsp
-FREQ_SYS ?= 24000000
-XRAM_SIZE ?= 0x0400
-XRAM_LOC ?= 0x0000
-CODE_SIZE ?= 0x3800
 
 ## Get program name from enclosing directory name
 TARGET = objects/$(lastword $(subst /, ,$(CURDIR)))
@@ -21,12 +22,11 @@ CC = /Developer/sdcc/bin/sdcc
 OBJCOPY = /Developer/sdcc/bin/sdobjcopy
 FLASHER = /Developer/librech551/wchisptool
 
-CFLAGS := -V -mmcs51 --model-large \
+CFLAGS := -mmcs51 --model-large \
     --xram-size $(XRAM_SIZE) --xram-loc $(XRAM_LOC) \
     --code-size $(CODE_SIZE) \
     -I$(BSP)/inc -Isrc/inc \
-    -D$(CPU) -DFREQ_SYS=$(FREQ_SYS) \
-    $(EXTRA_FLAGS)
+    -D$(CPU)
 LDFLAGS := $(CFLAGS)
 
 

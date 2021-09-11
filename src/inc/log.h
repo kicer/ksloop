@@ -2,6 +2,7 @@
 #ifndef _LOG_H_
 #define _LOG_H_
 
+
 #include <stdint.h>
 
 enum { /* loglevel */
@@ -12,7 +13,9 @@ enum { /* loglevel */
 	LOG_DEBUG    = 0x04,
 	LOG_HEX      = 0x80, /* for dump binary */
 };
+
 extern int log_init(uint8_t loglevel);
+
 /* dmesg(LOG_DEBUG, STRING("hello");
  * dmesg_hex(LOG_DEBUG, "hello", pkg); */
 #define STRING(s)  (s),(sizeof(s)-1)
@@ -23,10 +26,9 @@ extern int log_init(uint8_t loglevel);
 extern int dmesg(uint8_t loglevel, const uint8_t *pbuf, uint8_t size);
 
 #define LOG_TX_MAXSIZE    64
+#define LOG_BAUDRATE      9600
 
-/* for interrupt
- * void log_ticks_cb();
- */
+#define LOG_DEVICE_UART   1
 
 
 #endif /* _LOG_H_ */

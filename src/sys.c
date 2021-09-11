@@ -2,8 +2,6 @@
 #include "sys.h"
 
 
-#define bsp_wfi()      do {} while(0)
-
 typedef enum {
     TASK_NONE=0,
     TASK_ALARM,
@@ -73,7 +71,7 @@ int sys_task_remove(Task foo) {
 void sys_run(void) {
     while(1) {
         int evt_systicks = 0;
-        bsp_wfi();
+        BSP_wfi();
         if(isEventSet(EVENT_SYSTICKS)) {
             evt_systicks = 1;
             sys_event_clear(EVENT_SYSTICKS);
