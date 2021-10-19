@@ -75,3 +75,7 @@ clean:
 
 serial:
 	$(FLASHTOOL)/hc32flash.py -d $(DEVICE) -p $(SERIAL) -u -w $(APP).bin -b 115200 -R
+
+flash:
+	echo "r\nh\nloadbin $(APP).bin 0\nexit\n" |\
+	JLinkExe -device HC32L130 -autoconnect 1 -if SWD -speed 4000
