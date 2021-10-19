@@ -2,7 +2,9 @@
 DEVICE=ch552e
 CPU=CH552
 
-## RAM/ROM code size/map
+# Adjust the XRAM location and size to
+# leave space for the USB DMA buffers.
+# Buffer layout in XRAM
 XRAM_SIZE = 0x0400
 XRAM_LOC = 0x0000
 CODE_SIZE = 0x3800

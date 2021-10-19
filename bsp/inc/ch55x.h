@@ -18,7 +18,7 @@
 
 #define try_param(x) ((void)x)
 
-#define BSP_wfi()                   ((void)0)
+#define BSP_wfi()                  ((void)0)
 #define BSP_SWReset()              ((void)0)
 #define BSP_enableInterrupt()      ((void)0)
 
