@@ -1,57 +1,77 @@
 ## Set Mcu Type
-DEVICE=ch552e
-CPU=CH552
+DEVICE=hc32l130j8ta
+MCPU=cortex-m0plus
 
-# Adjust the XRAM location and size to
-# leave space for the USB DMA buffers.
-# Buffer layout in XRAM
-XRAM_SIZE = 0x0400
-XRAM_LOC = 0x0000
-CODE_SIZE = 0x3800
+TOOLCHAIN ?= /Developer/gcc-arm-none-eabi
+FLASHTOOL ?= /Developer/hc32flash
+SERIAL ?= /dev/tty.SLAB_USBtoUART
 
 ## A directory for common include files
 BSP = bsp
 
 ## Get program name from enclosing directory name
-TARGET = objects/$(lastword $(subst /, ,$(CURDIR)))
+APP = objects/$(lastword $(subst /, ,$(CURDIR)))
 
-SOURCES=$(wildcard src/*.c)
-OBJECTS=$(SOURCES:.c=.rel)
+SOURCES  = $(wildcard src/*.c) $(wildcard bsp/*.c)
+OBJECTS  = $(SOURCES:.c=.o)
+OBJECTS += startup/core.o
+OBJECTS += startup/$(DEVICE)_vt.o
 
 HEADERS=$(wildcard src/inc/*.h $(BSP)/inc/*.h)
 
-CC = /Developer/sdcc/bin/sdcc
-OBJCOPY = /Developer/sdcc/bin/sdobjcopy
-FLASHER = /Developer/librech551/wchisptool
+CC = $(TOOLCHAIN)/bin/arm-none-eabi-gcc
+AS = $(TOOLCHAIN)/bin/arm-none-eabi-as
+LD = $(TOOLCHAIN)/bin/arm-none-eabi-ld
+OC = $(TOOLCHAIN)/bin/arm-none-eabi-objcopy
+OD = $(TOOLCHAIN)/bin/arm-none-eabi-objdump
+OS = $(TOOLCHAIN)/bin/arm-none-eabi-size
 
-CFLAGS := -mmcs51 --model-large \
-    --xram-size $(XRAM_SIZE) --xram-loc $(XRAM_LOC) \
-    --code-size $(CODE_SIZE) \
-    -I$(BSP)/inc -Isrc/inc \
-    -D$(CPU)
-LDFLAGS := $(CFLAGS)
+APPFLAGS = -I$(BSP)/inc -Isrc/inc
+
+ASMFLAGS += -O0 -mcpu=$(MCPU) -mthumb -Wall
+ASMFLAGS += -fmessage-length=0
+
+CFLAGS += -mthumb -mcpu=$(MCPU) -Os -Wall -MD
+CFLAGS += -ffunction-sections -fdata-sections
+CFLAGS += --specs=nosys.specs -fno-exceptions
+CFLAGS += -fmessage-length=0
+CFLAGS += -msoft-float -mfloat-abi=soft
+CFLAGS += -D$(DEVICE)
+
+LDFLAGS += -mthumb -mcpu=$(MCPU) -Wl,-cref -Wl,--gc-sections
+LDFLAGS += -L./ld -T./ld/$(DEVICE).ld
+LDFLAGS += -Wl,-Map=$(APP).map
+LDFLAGS += -lgcc -nostdlib --specs=nosys.specs
 
 
-.PHONY: all clean flash factory erase
+.PHONY: all clean serial
 
-$(TARGET).bin: $(TARGET).ihx
-	$(OBJCOPY) -I ihex -O binary $(TARGET).ihx $(TARGET).bin
+all: $(APP).hex $(APP).bin
+$(APP).bin $(APP).hex: $(APP).elf
 
-$(TARGET).ihx: $(OBJECTS)
-	$(CC) $(LDFLAGS) $^ -o $@
+%.bin: %.elf
+	$(OC) -S -O binary $< $@
+	$(OS) $<
 
-%.rel : %.c $(HEADERS)
-	$(CC) $(CFLAGS) -c -o $@ $<
+%.hex: %.elf
+	$(OC) -S -O ihex $< $@
 
-CCOMPILEDFILES=$(SOURCES:.c=.asm) $(SOURCES:.c=.lst) $(SOURCES:.c=.rel) \
-               $(SOURCES:.c=.rst) $(SOURCES:.c=.sym)
+$(APP).elf: $(OBJECTS)
+	$(CC) $^ $(LDFLAGS) -o $@
+
+%.o: %.c $(HEADERS)
+	$(CC) -c $(CFLAGS) $(APPFLAGS) -o $@ $<
+
+%.o: %.S
+	$(CC) -c $(ASMFLAGS) -o $@ $<
+
+%.o: %.s
+	$(CC) -c $(ASMFLAGS) -o $@ $<
+
+CCOMPILEDFILES=$(SOURCES:.c=.S) $(SOURCES:.c=.d) $(OBJECTS)
+
 clean:
-	rm -f $(TARGET).bin $(TARGET).ihx $(TARGET).cdb $(TARGET).lk $(TARGET).map $(TARGET).mem $(CCOMPILEDFILES)
+	rm -f $(APP).bin $(APP).hex $(APP).elf $(APP).map $(CCOMPILEDFILES)
 
-flash: $(TARGET).bin
-	$(FLASHER) -g -f $(TARGET).bin
-
-erase:
-	$(FLASHER) -e
-
-release: erase flash
+serial:
+	$(FLASHTOOL)/hc32flash.py -d $(DEVICE) -p $(SERIAL) -u -w $(APP).bin -b 115200 -R

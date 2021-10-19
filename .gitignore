@@ -10,3 +10,6 @@
 *.bin
 *.hex
 *.mem
+*.o
+*.d
+/objects/
