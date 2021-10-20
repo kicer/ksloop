@@ -15,6 +15,7 @@ enum { /* loglevel */
 };
 
 extern int log_init(uint8_t loglevel);
+extern int log_deinit(void);
 
 extern int dmesg(uint8_t loglevel, const uint8_t *pbuf, uint8_t size);
 /* dmesg_str(LOG_DEBUG, "hello");
@@ -29,14 +30,15 @@ extern int dmesg(uint8_t loglevel, const uint8_t *pbuf, uint8_t size);
 
 #define LOG_BAUDRATE      9600
 #define LOG_TX_MAXSIZE    64
-#define LOG_DEVICE_UART   1
 
+#define LOG_DEVICE_UART   1
 #if defined(LOG_DEVICE_UART)
-    #include "log_uart.h"    
-    #define _log_init()     do {log_uart_init(LOG_BAUDRATE);} while(0)
-    #define _log_send       log_uart_send
+    #include "uart1.h"    
+    #define hal_log_init()     uart1_init(LOG_BAUDRATE)
+    #define hal_log_deinit     uart1_deinit
+    #define hal_log_send       uart1_send
 #else
-    #error "Please defined the log.uart function"
+    #error "Please defined the log.device function"
 #endif /* LOG_DEVICE_UART */
 
 

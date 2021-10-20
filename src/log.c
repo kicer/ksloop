@@ -8,10 +8,15 @@ const uint8_t LOG_CODE_TABLE[5] = {'-','E','W','I','D'};
 
 int log_init(uint8_t loglevel) {
     if(loglevel != LOG_NONE) {
-        _log_init();
+        hal_log_init();
     }
     gLevel = loglevel;
     return 0;
+}
+
+int log_deinit(void) {
+    gLevel = LOG_NONE;
+    return hal_log_deinit();
 }
 
 int dmesg(uint8_t loglevel, const uint8_t *pbuf, uint8_t size) {
@@ -48,7 +53,7 @@ int dmesg(uint8_t loglevel, const uint8_t *pbuf, uint8_t size) {
             }
             TxCounter += 1;
         }
-        return _log_send(TxBuffer, TxCounter);
+        return hal_log_send(TxBuffer, TxCounter);
     }
 
     return -1;
