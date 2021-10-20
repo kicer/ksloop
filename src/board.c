@@ -17,14 +17,20 @@ static void hw_io_init(void) {
     gpio_init_out(PD,06,0);
     /* sensor.pwr, on */
     gpio_init_out(PB,06,1);
-    /* ble.rst, pull-up */
-    gpio_init_in(PA,12);
-    gpio_pull_up(PA,12);
-    //gpio_init_out(PA,12,1);
     /* ble.pwr, off */
     gpio_init_out(PA,11,0);
+    /* ble.rst, pull-up */
+    gpio_init_in(PA,12);
     /* eeprom.cs, off */
     gpio_init_out(PB,12,1);
+    /* unused pin, set 0?
+     * gpio_init_out(PC,13,0);
+     * gpio_init_out(PA,06,0);
+     * gpio_init_out(PB,07,0);
+     * gpio_init_out(PB,05,0);
+     * gpio_init_out(PA,15,0);
+     * gpio_init_out(PD,07,0);
+     */
 }
 
 static void detec_loop(void) {
@@ -50,9 +56,9 @@ static void delay_exec(void) {
 }
 
 static void goto_sleep() {
+    log_deinit();
     SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
     SCB->SCR |= 1u<<0;
-    log_deinit();
 }
 
 

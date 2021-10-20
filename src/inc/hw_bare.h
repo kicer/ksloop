@@ -82,6 +82,7 @@
 #define gpio_floating(port, pin) do {   \
     M0P_GPIO->port##PU_f.port##pin = 0; \
     M0P_GPIO->port##PD_f.port##pin = 0; \
+    M0P_GPIO->port##OD_f.port##pin = 0; \
 } while(0)
 
 /* Open-drain */

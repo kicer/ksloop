@@ -42,11 +42,12 @@ int uart1_init(uint32_t baud) {
 }
 
 int uart1_deinit(void) {
+    NVIC_DisableIRQ(UART1_IRQn); /* disable irq */
+    M0P_SYSCTRL->PERI_CLKEN_f.UART1 = 0;
     gpio_init_in(PA,02);
     gpio_init_in(PA,03);
-    gpio_pull_up(PA,02);
-    gpio_pull_up(PA,03);
-    NVIC_DisableIRQ(UART1_IRQn); /* enable irq */
+    gpio_floating(PA,02);
+    gpio_floating(PA,03);
     return 0;
 }
 
