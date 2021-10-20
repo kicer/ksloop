@@ -7,7 +7,7 @@
 /* porting with ur mcu */
 #include "hc32lx.h"
 
-#define CORE_CLOCK_HZ           4000000
+#define CORE_CLOCK_HZ           24000000
 
 #define BIT(x)                  (1UL << (x))
 #define try_param(x)            ((void)x)

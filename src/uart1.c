@@ -5,9 +5,9 @@
 #define DEV_UARTx           M0P_UART1
 #define TX_MAXSIZE    64
 
-static uint8_t TxBuffer[TX_MAXSIZE];
-static int TxCounter = 0;
-static int TxPointer = -1;
+volatile static uint8_t TxBuffer[TX_MAXSIZE];
+volatile static int TxCounter = 0;
+volatile static int TxPointer = -1;
 
 static void uart1_tx_start(void) {
     DEV_UARTx->SCON_f.TXEIE = 1; /* tx empty interrupt */
@@ -26,7 +26,8 @@ int uart1_init(uint32_t baud) {
     gpio_pull_up(PA,03);
     /* clock enable */
     M0P_SYSCTRL->PERI_CLKEN_f.UART1 = 1;
-    /* uart init, 19200bps 8N1, mode=1,div=8,cnt=26 */
+    /* uart init, HCLK=4M, 19200bps 8N1, mode=1,div=8,cnt=26 */
+    /* uart init, HCLK=24M, 115200bps 8N1, mode=1,div=8,cnt=26 */
     DEV_UARTx->SCON = 0x240u;
     DEV_UARTx->SCNT = 26;
     DEV_UARTx->ICR_f.RCCF = 0; /* clear rx flag */
@@ -55,7 +56,7 @@ int uart1_send(uint8_t *buffer, uint8_t size) {
     uint8_t count = TxCounter; 
     if(count + size <= TX_MAXSIZE) {
         for(int i=0; i<size; i++) {
-            TxBuffer[TxCounter] = buffer[i];
+            TxBuffer[count] = buffer[i];
             count += 1;
         }
         if(TxPointer<0) {
@@ -70,7 +71,7 @@ int uart1_send(uint8_t *buffer, uint8_t size) {
     return -1;
 }
 
-int isrcb_uart1_tx_ch(void) {
+static int isrcb_uart1_tx_ch(void) {
     int ch = -1;
     int count = TxCounter;
     if(count > 0) {
