@@ -14,6 +14,7 @@ typedef struct {
 } DevData;
 
 typedef struct {
+    uint32_t powerCnt;
     uint32_t magic;
 } DevCfg;
 

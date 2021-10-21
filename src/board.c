@@ -1,6 +1,7 @@
 #include "hw_bare.h"
 #include "log.h"
 #include "sys.h"
+#include "appcfg.h"
 #include "board.h"
 
 /* global vars */
@@ -39,17 +40,24 @@ static void detec_loop(void) {
 }
 
 static void load_config(void) {
-    /* load cfg */
-    if(gDevCfg.magic != MAGIC_CODE) {
-        gDevCfg.magic = MAGIC_CODE;
-    }
-    /* init global */
+    /* init data */
     for(int i=0; i<sizeof(gDevData); i++) {
         *(((uint8_t *)&gDevData)+i) = 0x00;
+    }
+    /* load cfg */
+    int size = appcfg_read(&gDevCfg);
+    if((size != sizeof(DevCfg))||(gDevCfg.magic != MAGIC_CODE)) {
+        for(int i=0; i<sizeof(gDevCfg); i++) {
+            *(((uint8_t *)&gDevCfg)+i) = 0x00;
+        }
+        gDevCfg.magic = MAGIC_CODE;
     }
 }
 
 static void delay_exec(void) {
+    /* powerCnt */
+    gDevCfg.powerCnt += 1;
+    appcfg_write(&gDevCfg, sizeof(DevCfg));
     /* logger */
     log_init(LOG_DEBUG);
     dmesg_hex(LOG_INFO, "HWB.v1:", (uint8_t *)&gDevCfg, sizeof(gDevCfg));
@@ -64,6 +72,7 @@ static void goto_sleep() {
 
 /* ################# main function #################   */
 int board_init(void) {
+    appcfg_init(MAGIC_CODE);
     load_config();
     hw_io_init();
     //sys_task_reg_event(EVENT_UART_RECV_PKG, uart_recv_pkg_cb);
