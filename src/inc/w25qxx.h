@@ -13,7 +13,6 @@ typedef enum {
     W25Q256 = 0XEF18,        /**< w25q256 */
 } w25qxx_type_t;
 
-
 extern int w25qxx_init(w25qxx_type_t type);
 extern int w25qxx_deinit(void);
 extern int w25qxx_read(uint32_t addr, uint8_t *data, int size);

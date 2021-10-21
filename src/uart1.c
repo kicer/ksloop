@@ -28,10 +28,12 @@ int uart1_init(uint32_t baud) {
     M0P_SYSCTRL->PERI_CLKEN_f.UART1 = 1;
 #if (CORE_CLOCK_HZ == 4000000ul)
     /* uart init, HCLK=4M, 19200bps 8N1, mode=1,div=8,cnt=26 */
+    DEV_UARTx->SCON = 0;
     DEV_UARTx->SCON = 0x240u;
     DEV_UARTx->SCNT = ((2500000/baud)*2+5)/10;
 #elif (CORE_CLOCK_HZ == 24000000ul)
     /* uart init, HCLK=24M, 115200bps 8N1, mode=1,div=8,cnt=26 */
+    DEV_UARTx->SCON = 0;
     DEV_UARTx->SCON = 0x240u;
     DEV_UARTx->SCNT = (12500/(baud/2400)+5)/10;
 #else

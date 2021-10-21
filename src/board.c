@@ -13,7 +13,7 @@ static void hw_io_init(void) {
     /* io clock enable */
     M0P_SYSCTRL->PERI_CLKEN_f.GPIO = 1;
     /* buzzer, off*/
-    gpio_init_out(PA,07,0);
+    //gpio_init_out(PA,07,0);
     /* 4g.pwr, off */
     gpio_init_out(PD,06,0);
     /* sensor.pwr, on */
@@ -37,6 +37,11 @@ static void hw_io_init(void) {
 static void detec_loop(void) {
     /* led loop */
     gpio_out(PA,07,!gpio_read(PA,07));
+    if(hal_appcfg_init() == 0) {
+        dmesg_str(LOG_INFO, "hal_appcfg_init: ok");
+    } else {
+        dmesg_str(LOG_INFO, "hal_appcfg_init: error");
+    }
 }
 
 static void load_config(void) {
@@ -76,8 +81,8 @@ int board_init(void) {
     load_config();
     hw_io_init();
     //sys_task_reg_event(EVENT_UART_RECV_PKG, uart_recv_pkg_cb);
-    sys_task_reg_timer(5000, detec_loop);
+    sys_task_reg_timer(2000, detec_loop);
     sys_task_reg_alarm(1024, delay_exec);
-    sys_task_reg_alarm(20240, goto_sleep);
+    sys_task_reg_alarm(6000000, goto_sleep);
     return 0;
 }
