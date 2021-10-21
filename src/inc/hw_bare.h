@@ -7,9 +7,9 @@
 /* porting with ur mcu */
 #include "hc32lx.h"
 
-#define CORE_CLOCK_HZ           24000000
+#define CORE_CLOCK_HZ           (4000000ul)
 
-#define BIT(x)                  (1UL << (x))
+#define BIT(x)                  (1ul << (x))
 #define try_param(x)            ((void)x)
 
 #define BSP_enableInterrupt     __enable_irq

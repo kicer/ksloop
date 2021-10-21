@@ -28,7 +28,7 @@ extern int dmesg(uint8_t loglevel, const uint8_t *pbuf, uint8_t size);
         dmesg(l,(uint8_t*)(s),(sizeof(s)-1)); \
     } while(0)
 
-#define LOG_BAUDRATE      9600
+#define LOG_BAUDRATE      115200
 #define LOG_TX_MAXSIZE    64
 
 #define LOG_DEVICE_UART   1
