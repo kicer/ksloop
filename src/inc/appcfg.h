@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 extern int appcfg_init(uint32_t magic);
-extern int appcfg_read(void *cfg);
+extern int appcfg_read(void *cfg, int size);
 extern int appcfg_write(void *cfg, int size);
 
 #define APPCFG_DEVICE_W25X      1
@@ -15,9 +15,10 @@ extern int appcfg_write(void *cfg, int size);
     #define hal_appcfg_deinit       w25qxx_deinit
     #define hal_appcfg_read         w25qxx_read
     #define hal_appcfg_write        w25qxx_write
-    /* w25q128  block 0 for appcfg */
+    #define hal_appcfg_erase()      w25qxx_sector_erase(APPCFG_START_ADDRESS)
+    /* w25q128: sector 0 for appcfg */
     #define APPCFG_START_ADDRESS    0
-    #define APPCFG_BLOCK_NUMBER     256
+    #define APPCFG_BLOCK_NUMBER     16
     #define APPCFG_BLOCK_SIZE       256
 #else
     #error "Please defined the appcfg.device function"

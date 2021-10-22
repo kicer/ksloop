@@ -50,7 +50,7 @@ int appcfg_init(uint32_t magic) {
         for(int i=0; i<size; i++) {
             chksum += pBlock[i];
         }
-        hal_appcfg_read(addr+APPCFG_BLOCK_SIZE, &btmp, 1);
+        hal_appcfg_read(addr+APPCFG_BLOCK_SIZE-1, &btmp, 1);
         chksum += btmp;
         if(chksum == 0xFF) {
             /* chksum pass: break  */
@@ -88,21 +88,23 @@ int appcfg_write(void *cfg, int size) {
         }
         eBlock.chksum = 0xFF-chksum;
         /* write config to device */
+        if(blk_id == 0) hal_appcfg_erase(); /* erase when 1st */
         uint32_t addr = APPCFG_START_ADDRESS + blk_id*APPCFG_BLOCK_SIZE;
-        hal_appcfg_write(addr, (uint8_t *)(&eBlockId), APPCFG_BLOCK_SIZE);
+        hal_appcfg_write(addr, (uint8_t *)(&eBlock), APPCFG_BLOCK_SIZE);
         eBlockId = blk_id;
         return 0;
     }
     return -1;
 }
 
-int appcfg_read(void *cfg) {
+int appcfg_read(void *cfg, int size) {
     uint8_t *pcfg = (uint8_t *)cfg;
     if(eBlockId >= 0) {
+        if(size != eBlock.size) return -2;
         for(int i=0; i<eBlock.size; i++) {
             pcfg[i] = eBlock.data[i];
         }
-        return eBlock.size;
+        return size;
     }
     return -1;
 }

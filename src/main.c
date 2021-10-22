@@ -10,8 +10,8 @@ static void app_clk_init(void) {
      * 采用内部RCH时钟作为主时钟，上电后默认为4MHz
      * 进入DeepSleep模式后会自动关闭
      */
-#if 0
-    /* switch to 24MHz */
+#if 1
+    /* switch to 24MHz
      * 切换成24MHz，以便适配串口波特率115200
      */
     M0P_SYSCTRL->SYSCTRL2 = 0x5A5A;
@@ -24,9 +24,9 @@ static void app_clk_init(void) {
     M0P_SYSCTRL->SYSCTRL2 = 0x5A5A;
     M0P_SYSCTRL->SYSCTRL2 = 0xA5A5;
     M0P_SYSCTRL->SYSCTRL0_f.HCLK_PRS = 0;
+#endif
     /* wait stable */
     while(1 != M0P_SYSCTRL->RCH_CR_f.STABLE){};
-#endif
 }
 
 
