@@ -1,8 +1,9 @@
 #include "hw_bare.h"
-#include "log.h"
-#include "sys.h"
-#include "appcfg.h"
 #include "board.h"
+#include "sys.h"
+#include "log.h"
+#include "sht3x.h"
+#include "appcfg.h"
 
 /* global vars */
 static DevData gDevData;
@@ -30,10 +31,22 @@ static void hw_io_init(void) {
      */
 }
 
+static void sensor_read_cb(void) {
+    uint16_t t, rh;
+    if(sht3x_read(&t, &rh) == 0) {
+        gDevData.t = t;
+        gDevData.rh = rh;
+        gDevData.sens |= SENS_TRH_IN;
+    }
+    dmesg_hex(LOG_DEBUG, "gDevData:", (uint8_t *)&gDevData, sizeof(gDevData));
+}
+
 static void detec_loop(void) {
     /* led loop */
     gpio_out(PA,07,!gpio_read(PA,07));
-    dmesg_hex(LOG_INFO, "HWB.v1:", (uint8_t *)&gDevCfg, sizeof(gDevCfg));
+    /* sht3x meas start */
+    sht3x_meas();
+    sys_task_reg_alarm(15, sensor_read_cb);
 }
 
 static void load_config(void) {
@@ -49,6 +62,8 @@ static void load_config(void) {
         }
         gDevCfg.magic = MAGIC_CODE;
     }
+    /* init vars */
+    gDevData.device = DEVICE_CODE;
 }
 
 static void delay_exec(void) {
@@ -72,6 +87,7 @@ int board_init(void) {
     hw_io_init();
     appcfg_init(MAGIC_CODE);
     load_config();
+    sht3x_init();
     //sys_task_reg_event(EVENT_UART_RECV_PKG, uart_recv_pkg_cb);
     sys_task_reg_timer(2000, detec_loop);
     sys_task_reg_alarm(1024, delay_exec);

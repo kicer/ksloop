@@ -7,10 +7,24 @@
 #define EVENT_UART_RECV_PKG     1
 #define EVENT_UART_SEND_PKG     2
 
-#define MAGIC_CODE        (0x20210911) /* 2021-09-11 */
+#define MAGIC_CODE        (0x20211022) /* 2021-10-22 */
+#define DEVICE_CODE       (SENS_TRH_IN|SENS_ECS0)
+
+typedef enum {
+    SENS_ECS0       = (uint8_t)0x01,
+    SENS_ECS1       = (uint8_t)0x02,
+    SENS_ECS2       = (uint8_t)0x04,
+    SENS_ECS3       = (uint8_t)0x08,
+    SENS_TRH_OUT    = (uint8_t)0x40,
+    SENS_TRH_IN     = (uint8_t)0x80,
+} sens_type_t;
 
 typedef struct {
-    uint8_t devSt;
+    uint8_t device;
+    uint8_t sens;
+    uint16_t t;
+    uint16_t rh;
+    /* private */
 } DevData;
 
 typedef struct {

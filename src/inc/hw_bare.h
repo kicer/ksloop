@@ -11,6 +11,7 @@
 
 #define BIT(x)                  (1ul << (x))
 #define try_param(x)            ((void)x)
+#define hex2ch(c)               ((c)>=10?'A'+(c)-10:'0'+(c))
 
 #define BSP_enableInterrupt     __enable_irq
 #define BSP_SWReset             NVIC_SystemReset

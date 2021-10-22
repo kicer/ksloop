@@ -20,7 +20,6 @@ int log_deinit(void) {
 }
 
 int dmesg(uint8_t loglevel, const uint8_t *pbuf, uint8_t size) {
-    #define H2C(c) ((c)>=10?'A'-10+(c):(c)+'0')
     uint8_t TxBuffer[LOG_TX_MAXSIZE];
     uint8_t TxCounter = 0;
 
@@ -44,8 +43,8 @@ int dmesg(uint8_t loglevel, const uint8_t *pbuf, uint8_t size) {
         }
         for(int i=0; i<size; i++) {
             if(loglevel == LOG_HEX) {
-                TxBuffer[TxCounter] = H2C((pbuf[i]>>4)); TxCounter+=1;
-                TxBuffer[TxCounter] = H2C((pbuf[i]&0x0F));TxCounter+=1;
+                TxBuffer[TxCounter] = hex2ch((pbuf[i]>>4)); TxCounter+=1;
+                TxBuffer[TxCounter] = hex2ch((pbuf[i]&0x0F));TxCounter+=1;
                 TxBuffer[TxCounter] = ' ';
                 if(i==size-1) TxBuffer[TxCounter] = '\n';
             } else {

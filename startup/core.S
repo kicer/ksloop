@@ -69,5 +69,7 @@ reset_handler:
     BCC  reset_bss
 
   // Branch to the 'main' method.
-  B    main
+  //B     main
+  ldr   r0, =main
+  mov   pc, r0
 .size reset_handler, .-reset_handler
