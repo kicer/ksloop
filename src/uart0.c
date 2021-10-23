@@ -18,10 +18,10 @@ static void uart0_tx_stop(void) {
 }
 
 int uart0_init(uint32_t baud) {
-    /* TX.4G PB08 */
+    /* TX PB08,AF1 */
     gpio_init_afout(PA,08,1);
     gpio_pull_up(PA,08);
-    /* RX.4G PB09 */
+    /* RX PB09,AF1 */
     gpio_init_afin(PB,09,1);
     gpio_pull_up(PB,09);
     /* clock enable */
