@@ -2,8 +2,9 @@
 #include "board.h"
 #include "sys.h"
 #include "log.h"
-#include "sht3x.h"
 #include "appcfg.h"
+#include "rtc.h"
+#include "sht3x.h"
 
 /* global vars */
 static DevData gDevData;
@@ -38,7 +39,6 @@ static void sensor_read_cb(void) {
         gDevData.rh = rh;
         gDevData.sens |= SENS_TRH_IN;
     }
-    dmesg_hex(LOG_DEBUG, "gDevData:", (uint8_t *)&gDevData, sizeof(gDevData));
 }
 
 static void detec_loop(void) {
@@ -71,7 +71,6 @@ static void delay_exec(void) {
     gDevCfg.powerCnt += 1;
     appcfg_write(&gDevCfg, sizeof(DevCfg));
     /* logger */
-    log_init(LOG_DEBUG);
     dmesg_hex(LOG_INFO, "HWB.v1:", (uint8_t *)&gDevCfg, sizeof(gDevCfg));
 }
 
@@ -81,12 +80,30 @@ static void goto_sleep() {
     SCB->SCR |= 1u<<0;
 }
 
+/* todo: for user.test */
+void isrcb_uart1_rx(uint8_t ch) {
+    switch(ch) {
+        case '#':
+            gDevData.ts = time_ts();
+            break;
+        case '$':
+            rtc_init();
+            break;
+        default:
+            break;
+    }
+    dmesg_hex(LOG_DEBUG, "gDevData:", (uint8_t *)&gDevData, sizeof(gDevData));
+}
+
 
 /* ################# main function #################   */
 int board_init(void) {
     hw_io_init();
     appcfg_init(MAGIC_CODE);
     load_config();
+    log_init(LOG_DEBUG);
+    /* peripheral init */
+    rtc_init();
     sht3x_init();
     //sys_task_reg_event(EVENT_UART_RECV_PKG, uart_recv_pkg_cb);
     sys_task_reg_timer(2000, detec_loop);

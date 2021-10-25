@@ -7,7 +7,7 @@
 #define EVENT_UART_RECV_PKG     1
 #define EVENT_UART_SEND_PKG     2
 
-#define MAGIC_CODE        (0x20211022) /* 2021-10-22 */
+#define MAGIC_CODE        (0x20211025) /* 2021-10-25 */
 #define DEVICE_CODE       (SENS_TRH_IN|SENS_ECS0)
 
 typedef enum {
@@ -25,6 +25,7 @@ typedef struct {
     uint16_t t;
     uint16_t rh;
     /* private */
+    uint32_t ts;
 } DevData;
 
 typedef struct {

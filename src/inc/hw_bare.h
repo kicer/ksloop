@@ -70,6 +70,16 @@
     M0P_GPIO->port##it_f.port##pin = 0;        \
 } while(0)
 
+/* Analog port */
+#define gpio_analog_port(port, pin) do {       \
+    M0P_GPIO->port##ADS_f.port##pin = PORT_AD; \
+} while(0)
+
+/* Digtal port */
+#define gpio_digtal_port(port, pin) do {       \
+    M0P_GPIO->port##ADS_f.port##pin = PORT_IO; \
+} while(0)
+
 /* Pull-up res */
 #define gpio_pull_up(port, pin) do {    \
     M0P_GPIO->port##PU_f.port##pin = 1; \
@@ -81,7 +91,7 @@
     M0P_GPIO->port##PD_f.port##pin = 1; \
 } while(0)
 
-/* Pull-down res */
+/* Floating */
 #define gpio_floating(port, pin) do {   \
     M0P_GPIO->port##PU_f.port##pin = 0; \
     M0P_GPIO->port##PD_f.port##pin = 0; \
