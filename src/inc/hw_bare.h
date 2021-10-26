@@ -26,11 +26,6 @@
 #define PORT_AD                 1
 #define PORT_IO                 0
 
-#define PORT_IT_HIGH            HIE
-#define PORT_IT_LOW             LIE
-#define PORT_IT_RISE            RIE
-#define PORT_IT_FALL            FIE
-
 /* General out io init */
 #define gpio_init_out(port, pin, val) do {     \
     M0P_GPIO->port##ADS_f.port##pin = PORT_IO; \
@@ -61,13 +56,15 @@
 } while(0)
 
 /* Interrupt enable */
+/* HIE/LIE/RIE/FIE */
 #define gpio_it_enable(port, pin, it) do {     \
-    M0P_GPIO->port##it_f.port##pin = 1;        \
+    M0P_GPIO->port##it##_f.port##pin = 1;        \
 } while(0)
 
 /* Interrupt disable */
+/* HIE/LIE/RIE/FIE */
 #define gpio_it_disable(port, pin, it) do {    \
-    M0P_GPIO->port##it_f.port##pin = 0;        \
+    M0P_GPIO->port##it##_f.port##pin = 0;        \
 } while(0)
 
 /* Analog port */
@@ -91,15 +88,17 @@
     M0P_GPIO->port##PD_f.port##pin = 1; \
 } while(0)
 
-/* Floating */
+/* Floating, with gpio_init_in */
 #define gpio_floating(port, pin) do {   \
     M0P_GPIO->port##PU_f.port##pin = 0; \
     M0P_GPIO->port##PD_f.port##pin = 0; \
     M0P_GPIO->port##OD_f.port##pin = 0; \
 } while(0)
 
-/* Open-drain */
+/* Open-drain, with gpio_init_out */
 #define gpio_open_drain(port, pin) do { \
+    M0P_GPIO->port##PU_f.port##pin = 0; \
+    M0P_GPIO->port##PD_f.port##pin = 0; \
     M0P_GPIO->port##OD_f.port##pin = 1; \
 } while(0)
 
@@ -121,6 +120,16 @@
 
 /* pin read */
 #define gpio_read(port, pin)  (M0P_GPIO->port##IN_f.port##pin != 0)
+
+
+/* ################### Helper Action ######################## */
+#define nvic_irq_enable(irq,level) do { \
+    NVIC_ClearPendingIRQ(irq);          \
+    NVIC_SetPriority(irq, level);       \
+    NVIC_EnableIRQ(irq);                \
+} while(0)
+
+#define nvic_irq_disable      NVIC_DisableIRQ
 
 
 #endif /* _HW_BARE_H_ */

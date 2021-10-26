@@ -3,7 +3,7 @@
 
 
 /* global log level */
-static uint8_t gLevel;
+static uint8_t gLevel = LOG_NONE;
 const uint8_t LOG_CODE_TABLE[5] = {'-','E','W','I','D'};
 
 int log_init(uint8_t loglevel) {

@@ -40,14 +40,12 @@ int lpuart1_init(uint32_t baud) {
     DEV_UARTx->SCON_f.RCIE = 1; /* rx interrupt */
     //DEV_UARTx->SCON_f.TCIE = 1; /* tx interrupt */
     /* interrupt setting */
-    NVIC_ClearPendingIRQ(LPUART1_IRQn); /* clear pending irq */
-    NVIC_SetPriority(LPUART1_IRQn, 1); /* high level */
-    NVIC_EnableIRQ(LPUART1_IRQn); /* enable irq */
+    nvic_irq_enable(LPUART1_IRQn, 1);
     return 0;
 }
 
 int lpuart1_deinit(void) {
-    NVIC_DisableIRQ(LPUART1_IRQn); /* disable irq */
+    nvic_irq_disable(LPUART1_IRQn);
     M0P_SYSCTRL->PERI_CLKEN_f.LPUART1 = 0;
     gpio_init_in(PB,08);
     gpio_init_in(PB,09);

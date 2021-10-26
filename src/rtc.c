@@ -47,9 +47,7 @@ int rtc_init(void) {
     M0P_RTC->CR1_f.ALMF = 0;
     M0P_RTC->CR1_f.ALMIE = 1;
     /* irq setting */
-    NVIC_ClearPendingIRQ(RTC_IRQn);
-    NVIC_SetPriority(RTC_IRQn, 0); /* high level */
-    NVIC_EnableIRQ(RTC_IRQn); /* enable irq */
+    nvic_irq_enable(RTC_IRQn, 0);
     /* start */
     M0P_RTC->CR0_f.START = 1;
     /* wait... */
@@ -61,9 +59,13 @@ int rtc_init(void) {
 }
 
 int rtc_deinit(void) {
-    gpio_digtal_port(PC,14);
-    gpio_digtal_port(PC,15);
+    nvic_irq_disable(RTC_IRQn);
+    M0P_SYSCTRL->PERI_CLKEN_f.RTC = 0;
     M0P_SYSCTRL->SYSCTRL0_f.XTL_EN = 0;
+    gpio_init_in(PC,14);
+    gpio_init_in(PC,15);
+    gpio_floating(PC,14);
+    gpio_floating(PC,15);
     return 0;
 }
 

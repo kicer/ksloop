@@ -6,6 +6,8 @@
 
 #define EVENT_UART_RECV_PKG     1
 #define EVENT_UART_SEND_PKG     2
+#define EVENT_GHGKEY_ACTION     3
+#define EVENT_SYKEY_ACTION      4
 
 #define MAGIC_CODE        (0x20211025) /* 2021-10-25 */
 #define DEVICE_CODE       (SENS_TRH_IN|SENS_ECS0)
@@ -29,6 +31,7 @@ typedef struct {
 } DevData;
 
 typedef struct {
+    uint8_t logLevel;
     uint32_t powerCnt;
     uint32_t magic;
 } DevCfg;

@@ -45,14 +45,12 @@ int uart1_init(uint32_t baud) {
     DEV_UARTx->SCON_f.RCIE = 1; /* rx interrupt */
     //DEV_UARTx->SCON_f.TCIE = 1; /* tx interrupt */
     /* interrupt setting */
-    NVIC_ClearPendingIRQ(UART1_IRQn); /* clear pending irq */
-    NVIC_SetPriority(UART1_IRQn, 3); /* low level */
-    NVIC_EnableIRQ(UART1_IRQn); /* enable irq */
+    nvic_irq_enable(UART1_IRQn, 3);
     return 0;
 }
 
 int uart1_deinit(void) {
-    NVIC_DisableIRQ(UART1_IRQn); /* disable irq */
+    nvic_irq_disable(UART1_IRQn);
     M0P_SYSCTRL->PERI_CLKEN_f.UART1 = 0;
     gpio_init_in(PA,02);
     gpio_init_in(PA,03);
