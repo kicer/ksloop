@@ -45,16 +45,8 @@
 
 #define SCL_READ   (M0P_GPIO->PBIN_f.PB07 != 0)
 
-
-#define I2C_NOP()  do {              \
-    for(uint32_t i=0; i<20; i++) {   \
-        __NOP();                     \
-    }} while(0)
-
-#define I2C_LONG_NOP()  do {         \
-    for(uint32_t i=0; i<40; i++) {   \
-        __NOP();                     \
-    }} while(0)
+#define I2C_NOP()           hw_delay_us(1)
+#define I2C_LONG_NOP()      hw_delay_us(10)
 
 /* clock streching timeout(0 for disabled) */
 #define I2C_CS_TICKS        0
