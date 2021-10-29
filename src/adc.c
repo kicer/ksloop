@@ -13,6 +13,7 @@ int adc_init(void) {
     M0P_ADC->CR0_f.REF = 3; /* AVCC */
     M0P_ADC->CR0_f.SAM = 3; /* 12cycle */
     M0P_ADC->CR0_f.CLKDIV = 3; /* PCLK/8 */
+    M0P_ADC->CR0_f.BUF = 1; /* adc op.buf */
     return 0;
 }
 

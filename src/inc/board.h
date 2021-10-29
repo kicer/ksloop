@@ -8,6 +8,7 @@
 #define EVENT_UART_SEND_PKG     2
 #define EVENT_GHGKEY_ACTION     3
 #define EVENT_SYKEY_ACTION      4
+#define EVENT_TEST1_ACTION      5
 
 #define MAGIC_CODE        (0x20211025) /* 2021-10-25 */
 #define DEVICE_CODE       (SENS_TRH_IN|SENS_ECS0)
@@ -26,6 +27,7 @@ typedef struct {
     uint8_t sens;
     uint16_t t;
     uint16_t rh;
+    uint16_t ad;
     /* private */
     uint32_t ts;
 } DevData;

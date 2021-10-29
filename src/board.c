@@ -5,6 +5,7 @@
 #include "appcfg.h"
 #include "rtc.h"
 #include "sht3x.h"
+#include "adc.h"
 
 
 /* global vars */
@@ -66,22 +67,26 @@ static void detec_loop(void) {
     sys_task_reg_alarm(15, sensor_read_cb);
 }
 
-static void goto_sleep() {
+static void goto_deepsleep() {
     pwr_buzzer_on();
     pwr_ble_off();
     log_deinit();
     SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
-    SCB->SCR |= 1u<<0;
+}
+
+static void exit_deepsleep() {
+    pwr_buzzer_off();
+    pwr_ble_on();
+    log_init(gDevCfg.logLevel);
+    SCB->SCR &= ~SCB_SCR_SLEEPDEEP_Msk;
 }
 
 /* 干簧管动作 */
 static void user_ghgkey_cb(void) {
     if(gpio_read(PB,03)) {
-        goto_sleep();
+        goto_deepsleep();
     } else {
-        pwr_buzzer_off();
-        pwr_ble_on();
-        log_init(gDevCfg.logLevel);
+        exit_deepsleep();
     }
 }
 
@@ -115,24 +120,29 @@ static void delay_exec(void) {
     dmesg_hex(LOG_INFO, "HWB.v1:", (uint8_t *)&gDevCfg, sizeof(gDevCfg));
 }
 
-/* todo: for user.test */
+static void user_test1(void) {
+    adc_init();
+    uint16_t tmp = adc_convert(4,16);
+    adc_deinit();
+    dmesg_hex(LOG_DEBUG, "user_test1:", (uint8_t *)&tmp, sizeof(tmp));
+}
+
 void isrcb_uart1_rx(uint8_t ch) {
     switch(ch) {
-        case '#':
-            gDevData.ts = time_ts();
-            break;
-        case '$':
-            rtc_init();
+        case '0':
+            sys_event_trigger(EVENT_TEST1_ACTION);
             break;
         default:
+            gDevData.ts = time_ts();
+            dmesg_hex(LOG_DEBUG, "@", (uint8_t *)&gDevData, sizeof(gDevData));
             break;
     }
-    dmesg_hex(LOG_DEBUG, "gDevData:", (uint8_t *)&gDevData, sizeof(gDevData));
 }
 
 
 /* ################# main function #################   */
 int board_init(void) {
+    hw_delay_init();
     hw_io_init();
     appcfg_init(MAGIC_CODE);
     load_config();
@@ -140,12 +150,12 @@ int board_init(void) {
     /* peripheral init */
     rtc_init();
     sht3x_init();
-    //sys_task_reg_event(EVENT_UART_RECV_PKG, uart_recv_pkg_cb);
+    sys_task_reg_event(EVENT_TEST1_ACTION,  user_test1); /* todo: test */
     sys_task_reg_timer(2000, detec_loop);
     sys_task_reg_alarm(1024, delay_exec);
     sys_task_reg_event(EVENT_SYKEY_ACTION,  user_sykey_cb);
     sys_task_reg_event(EVENT_GHGKEY_ACTION, user_ghgkey_cb);
-    sys_task_reg_alarm(10000, goto_sleep);
+    sys_task_reg_alarm(600000, goto_deepsleep);
     return 0;
 }
 
