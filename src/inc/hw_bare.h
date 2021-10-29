@@ -131,7 +131,9 @@
 
 #define nvic_irq_disable      NVIC_DisableIRQ
 
+extern void hw_delay_init(void);
 extern void hw_delay_us(uint32_t us);
+extern int64_t hw_uptime(void);
 
 
 #endif /* _HW_BARE_H_ */

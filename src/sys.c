@@ -17,7 +17,6 @@ typedef struct {
 } TaskStack;
 
 TaskStack _sys_task[TASK_STACK_SIZE];
-clock_t _sys_ticks = 0;
 clock_t _sys_event = 0;
 
 static void Ticks_Config(void);
@@ -117,10 +116,6 @@ int sys_event_clear(int evt) {
     return 0;
 }
 
-clock_t sys_uptime(void) {
-    return _sys_ticks;
-}
-
 static int isEventSet(int evt) {
     return ((_sys_event&((clock_t)(1<<evt)))!=0);
 }
@@ -149,7 +144,6 @@ static void Ticks_Config(void) {
 /*
  * Configure Tick IRQ callback function
  */
-void SysTick_IRQn_handler(void) {
-    _sys_ticks += 1;
+void __attribute__((weak)) SysTick_IRQn_handler(void) {
     sys_event_trigger(EVENT_SYSTICKS);
 }

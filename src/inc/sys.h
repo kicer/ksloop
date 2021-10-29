@@ -27,9 +27,6 @@ extern int sys_event_clear(int evt);
 
 extern void sys_run(void);
 
-/* system uptime, unit:1ms */
-extern clock_t sys_uptime(void);
-
 /* Task Max Size */
 #define TASK_STACK_SIZE  16
 /* Reserved event-0 for systick */
