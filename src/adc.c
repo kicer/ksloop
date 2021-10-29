@@ -7,13 +7,12 @@ int adc_init(void) {
     hal_adc_init();
     M0P_SYSCTRL->PERI_CLKEN_f.ADC = 1; /* adc clock */
     M0P_BGR->CR_f.BGR_EN = 1; /* bgr enable */
-    M0P_ADC->CR0_f.EN = 1; /* adc enable */
+    M0P_ADC->CR0 = 0x01; /* adc enable */
     ADC_DELAY();
     M0P_ADC->CR1_f.MODE = 1; /* continue mode */
-    M0P_ADC->CR1_f.RACCEN = 1; /* acc enable */
     M0P_ADC->CR0_f.REF = 3; /* AVCC */
     M0P_ADC->CR0_f.SAM = 3; /* 12cycle */
-    M0P_ADC->CR0_f.CLKDIV = 1; /* PCLK/2 */
+    M0P_ADC->CR0_f.CLKDIV = 3; /* PCLK/8 */
     return 0;
 }
 
@@ -43,11 +42,13 @@ uint16_t adc_convert(uint8_t mux, uint8_t cnt) {
     if(cnt >  2) M0P_ADC->SQR0_f.CH2MUX = mux;
     if(cnt >  1) M0P_ADC->SQR0_f.CH1MUX = mux;
     if(cnt >  0) M0P_ADC->SQR0_f.CH0MUX = mux;
-    M0P_ADC->SQR2_f.CNT = cnt;
-    M0P_ADC->ICR_f.SQRIC = 0; /* clear SQRIF */
+    M0P_ADC->SQR2_f.CNT = cnt-1;
+    M0P_ADC->CR1_f.RACCEN = 1;
     M0P_ADC->CR1_f.RACCCLR = 0; /* clear ACC */
+    M0P_ADC->ICR_f.SQRIC = 0; /* clear SQRIF */
     M0P_ADC->SQRSTART = 1; /* start */
     while(M0P_ADC->IFR_f.SQRIF==0){};
+    M0P_ADC->ICR_f.SQRIC = 0; /* clear SQRIF */
     result = M0P_ADC->RESULTACC;
     return (uint16_t)(result/cnt);
 }
