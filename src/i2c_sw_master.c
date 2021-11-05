@@ -5,45 +5,45 @@
 #define SOFT_I2C_ENABLE
 
 /********* -- adapt the defines for your hw -- ********/
-// SDA on port B, bit 5
+// SDA on port 3, bit 6
 #define SDA_IN()   do { \
-    M0P_GPIO->PBDIR_f.PB05 = DIR_OUT; \
+    M0P_GPIO->P3DIR_f.P36 = DIR_OUT; \
 } while(0)
 
 #define SDA_OUT()  do { \
-    M0P_GPIO->PBDIR_f.PB05 = DIR_IN; \
+    M0P_GPIO->P3DIR_f.P36 = DIR_IN; \
 } while(0)
 
 #define SDA_LOW()  do { \
-    M0P_GPIO->PBOUT_f.PB05 = 0; \
+    M0P_GPIO->P3OUT_f.P36 = 0; \
 } while(0)
 
 #define SDA_HIGH() do { \
-    M0P_GPIO->PBOUT_f.PB05 = 1; \
+    M0P_GPIO->P3OUT_f.P36 = 1; \
 } while(0)
 
-#define SDA_READ   (M0P_GPIO->PBIN_f.PB05 != 0)
+#define SDA_READ   (M0P_GPIO->P3IN_f.P36 != 0)
 
 
 /********* -- adapt the defines for your hw -- ********/
-// SCL on port B, bit 7
+// SCL on port 3, bit 5
 #define SCL_IN()   do { \
-    M0P_GPIO->PBDIR_f.PB07 = DIR_OUT; \
+    M0P_GPIO->P3DIR_f.P35 = DIR_OUT; \
 } while(0)
 
 #define SCL_OUT()  do { \
-    M0P_GPIO->PBDIR_f.PB07 = DIR_IN; \
+    M0P_GPIO->P3DIR_f.P35 = DIR_IN; \
 } while(0)
 
 #define SCL_LOW()  do { \
-    M0P_GPIO->PBOUT_f.PB07 = 0; \
+    M0P_GPIO->P3OUT_f.P35 = 0; \
 } while(0)
 
 #define SCL_HIGH() do { \
-    M0P_GPIO->PBOUT_f.PB07 = 1; \
+    M0P_GPIO->P3OUT_f.P35 = 1; \
 } while(0)
 
-#define SCL_READ   (M0P_GPIO->PBIN_f.PB07 != 0)
+#define SCL_READ   (M0P_GPIO->P3IN_f.P35 != 0)
 
 #define I2C_NOP()           hw_delay_us(1)
 #define I2C_LONG_NOP()      hw_delay_us(10)
@@ -55,15 +55,15 @@
 #ifdef SOFT_I2C_ENABLE
 
 void i2c_sw_Init(void) {
-    gpio_init_out(PB,05,1);
-    gpio_init_out(PB,07,1);
+    gpio_init_out(P3,5,1);
+    gpio_init_out(P3,6,1);
 }
 
 void i2c_sw_deinit(void) {
-    gpio_init_in(PB,05);
-    gpio_init_in(PB,07);
-    gpio_floating(PB,05);
-    gpio_floating(PB,07);
+    gpio_init_in(P3,5);
+    gpio_init_in(P3,6);
+    gpio_floating(P3,5);
+    gpio_floating(P3,6);
 }
 
 void i2c_sw_StartCondition(void) {

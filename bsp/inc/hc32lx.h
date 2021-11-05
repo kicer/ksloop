@@ -28,6 +28,10 @@
   #include "hc32l130f8ua.h"
 #elif defined(HC32L130J8TA) || defined(hc32l130j8ta)
   #include "hc32l130j8ta.h"
+#elif defined(HC32L110B4) || defined(hc32l110b4)
+  #include "hc32l110b4.h"
+#elif defined(HC32L110C6) || defined(hc32l110c6)
+  #include "hc32l110c6.h"
 #else
  #error "Please select the target HC32Lx device used in your application"
 #endif

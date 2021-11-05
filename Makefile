@@ -1,5 +1,5 @@
 ## Set Mcu Type
-DEVICE=hc32l130j8ta
+DEVICE=hc32l110b4
 MCPU=cortex-m0plus
 
 TOOLCHAIN ?= /Developer/gcc-arm-none-eabi
@@ -78,4 +78,4 @@ serial:
 
 flash: $(APP).bin
 	echo "r\nh\nloadbin $(APP).bin 0\nr\nexit\n" |\
-	JLinkExe -device HC32L130 -autoconnect 1 -if SWD -speed 4000
+	JLinkExe -device HC32L110 -autoconnect 1 -if SWD -speed 4000
