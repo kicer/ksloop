@@ -1,7 +1,6 @@
 #include "hw_bare.h"
 #include "board.h"
 #include "sys.h"
-#include "log.h"
 #include "appcfg.h"
 #include "adc.h"
 
@@ -30,7 +29,6 @@ static void load_config(void) {
         for(int i=0; i<sizeof(gDevCfg); i++) {
             *(((uint8_t *)&gDevCfg)+i) = 0x00;
         }
-        gDevCfg.logLevel = LOG_DEBUG;
         gDevCfg.magic = MAGIC_CODE;
     }
     /* init vars */
@@ -41,8 +39,6 @@ static void delay_exec(void) {
     /* powerCnt */
     gDevCfg.powerCnt += 1;
     appcfg_write(&gDevCfg, sizeof(DevCfg));
-    /* logger */
-    dmesg_hex(LOG_INFO, "HWB.v1:", (uint8_t *)&gDevCfg, sizeof(gDevCfg));
 }
 
 
@@ -52,7 +48,6 @@ int board_init(void) {
     hw_io_init();
     appcfg_init(MAGIC_CODE);
     load_config();
-    log_init(gDevCfg.logLevel);
     /* peripheral init */
     sys_task_reg_timer(2000, detec_loop);
     sys_task_reg_alarm(1024, delay_exec);

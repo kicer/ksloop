@@ -14,19 +14,19 @@ static void app_clk_init(void) {
     /* switch to 24MHz
      * 切换成24MHz，以便适配串口波特率115200
      */
-    M0P_SYSCTRL->SYSCTRL2 = 0x5A5A;
-    M0P_SYSCTRL->SYSCTRL2 = 0xA5A5;
-    M0P_SYSCTRL->SYSCTRL0_f.HCLK_PRS = 7;
-    M0P_SYSCTRL->RCH_CR = *((volatile uint16_t *)(0x00100C08ul)); /* 4M */
-    M0P_SYSCTRL->RCH_CR = *((volatile uint16_t *)(0x00100C06ul)); /* 8M */
-    M0P_SYSCTRL->RCH_CR = *((volatile uint16_t *)(0x00100C04ul)); /* 16M */
-    M0P_SYSCTRL->RCH_CR = *((volatile uint16_t *)(0x00100C00ul)); /* 24M */
-    M0P_SYSCTRL->SYSCTRL2 = 0x5A5A;
-    M0P_SYSCTRL->SYSCTRL2 = 0xA5A5;
-    M0P_SYSCTRL->SYSCTRL0_f.HCLK_PRS = 0;
+    M0P_CLOCK->SYSCTRL2 = 0x5A5A;
+    M0P_CLOCK->SYSCTRL2 = 0xA5A5;
+    M0P_CLOCK->SYSCTRL0_f.HCLK_PRS = 7;
+    M0P_CLOCK->RCH_CR = *((volatile uint16_t *)(0x00100C08ul)); /* 4M */
+    M0P_CLOCK->RCH_CR = *((volatile uint16_t *)(0x00100C06ul)); /* 8M */
+    M0P_CLOCK->RCH_CR = *((volatile uint16_t *)(0x00100C04ul)); /* 16M */
+    M0P_CLOCK->RCH_CR = *((volatile uint16_t *)(0x00100C00ul)); /* 24M */
+    M0P_CLOCK->SYSCTRL2 = 0x5A5A;
+    M0P_CLOCK->SYSCTRL2 = 0xA5A5;
+    M0P_CLOCK->SYSCTRL0_f.HCLK_PRS = 0;
 #endif
     /* wait stable */
-    while(1 != M0P_SYSCTRL->RCH_CR_f.STABLE){};
+    while(1 != M0P_CLOCK->RCH_CR_f.STABLE){};
 }
 
 
