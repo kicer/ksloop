@@ -36,11 +36,13 @@ static int tm1650_write(uint8_t cmd, uint8_t dat) {
 }
 
 static int _tube_show(uint8_t pdat[TUBE_SIZE]) {
+    /* fix with seg setting */
     int ack_err = 0;
     ack_err += tube_set_bright(_tube_level);
-    for(int i=0; i<TUBE_SIZE; i++) {
-        ack_err += tm1650_write(0x68+(i<<1), pdat[i]);
-    }
+    ack_err += tm1650_write(0x68, pdat[3]);
+    ack_err += tm1650_write(0x6A, pdat[0]);
+    ack_err += tm1650_write(0x6C, pdat[1]);
+    ack_err += tm1650_write(0x6E, pdat[2]);
     return ack_err;
 }
 
@@ -97,8 +99,7 @@ int tube_show_wait(void) {
     return _tube_show(_tube_data);
 }
 
-int tube_init(uint8_t bright_level) {
+int tube_init(void) {
     tm1650_init();
-    //return tube_set_bright(bright_level);
     return 0;
 }

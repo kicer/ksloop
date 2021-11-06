@@ -32,11 +32,7 @@ static void load_config(void) {
         gDevCfg.addr = SENS_I2C_ADDR;
         gDevCfg.report = 0x01;
         gDevCfg.syncTime = 8;
-        /* 
-         * gDevCfg.ad0 = 0x01A1;
-         * gDevCfg.adv = 0x08AD;
-         */
-        gDevCfg.adv = 0; /* for start from zero */
+        gDevCfg.ad0 = 0xFFFF;
         gDevCfg.k1 = 0x0123;
         gDevCfg.k2 = 13;
         gDevCfg.k3 = 213;
@@ -53,7 +49,7 @@ static void loop_main(void) {
     static uint16_t _pht_idx = 0;
     uint8_t idx = gDevData.idx;
     /* sens */
-    gDevData.ad_sens[idx] = adc_convert(4, 16);
+    gDevData.ad_sens[idx] = adc_convert(0, 1);
     if(idx >= ADC_BUF_SIZE-1) {
         uint16_t ad;
         /* ad.sens */
@@ -68,7 +64,6 @@ static void loop_main(void) {
         }
         ad = _sum-_ad_min-_ad_max;
         gDevData.ad = ad;
-        /* ad.1v8 */
         if(gDevData.state < ST_1V8_READ) {
             /* 完成1v8电压读取，进入预热模式 */
             gDevData.state = ST_1V8_READ;
@@ -99,18 +94,12 @@ static void loop_main(void) {
         }
         /* calc */
         uint16_t tvoc,hcho,co2;
-        uint16_t adv = gDevCfg.adv;
         uint16_t ad0 = gDevCfg.ad0;
         /* 零点AD值转换
          * 供电电压变化，对应的零点AD值也会有改变
          */
-        //ad0 = (adv==0)?0xFFFF:(uint16_t)((float)ad0*adk/adv);
-        if(adv == 0) {
-            ad0 = 0xFFFF;
-        }
         if(ad<ad0) { /* 有更小值则更新AD0值 */
             gDevCfg.ad0 = ad;
-            gDevCfg.adv = 0;
             ad0 = ad;
         }
         /* 设置本周期内最小ad值 */
@@ -133,7 +122,9 @@ static void loop_main(void) {
         if(gDevCfg.report > 0) {
             if(gDevData.report <= 1) {
                 gDevData.report = gDevCfg.report;
-                tube_show_digi(co2);
+                if(gDevData.state == ST_NORMAL) {
+                    tube_show_digi(co2);
+                }
             } else {
                 gDevData.report -= 1;
             }
@@ -141,7 +132,7 @@ static void loop_main(void) {
     } else {
         if((gDevData.state<ST_1V8_READ)&&(idx!=0)) {
             /* read 1v8 */
-            gDevData.ad_1v8 += adc_convert(4, 16);
+            gDevData.ad_1v8 += adc_convert(0, 1);
         }
         gDevData.idx = idx+1;
     }
@@ -163,18 +154,12 @@ static void sync_cfg(void) {
     gDevData.cali_idx = idx+1;
     /* set ad-zero */
     gDevCfg.ad0 = min;
-    gDevCfg.adv = gDevData.ad_1v8;
     /* reset ad_min */
     gDevData.ad_min = 0xFFFF;
 }
 
-static void user_test(void) {
-    static int v = 0;
-    v += 1;
-    tube_show_digi(v);
-}
-
 static void delay_exec(void) {
+    tube_set_bright(6);
     tube_show_wait();
     /* powerCnt */
     gDevCfg.powerCnt += 1;
@@ -192,11 +177,10 @@ int board_init(void) {
     load_config();
     /* peripheral init */
     adc_init();
-    tube_init(8);
+    tube_init();
     /* task init */
     sys_task_reg_alarm(67, delay_exec);
-    //sys_task_reg_timer(ADC_LOOP_TICKS, loop_main);
-    sys_task_reg_timer(1000, user_test);
+    sys_task_reg_timer(ADC_LOOP_TICKS, loop_main);
     sys_task_reg_timer((clock_t)3600000*gDevCfg.syncTime, sync_cfg);
     return 0;
 }

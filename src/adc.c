@@ -14,6 +14,7 @@ int adc_init(void) {
     M0P_ADC->CR0_f.SAM = 3; /* 12cycle */
     M0P_ADC->CR0_f.CLKSEL = 3; /* PCLK/8 */
     M0P_ADC->CR0_f.BUFEN = 1; /* adc op.buf */
+    M0P_ADC->CR1_f.RACC_EN = 1;
     return 0;
 }
 
@@ -26,16 +27,18 @@ int adc_deinit(void) {
 }
 
 uint16_t adc_convert(uint8_t mux, uint8_t cnt) {
+    static uint16_t v = 1024;
+    v += 1;
+    if(v > 1100) v= 1023;
+    return v;
     uint32_t result;
     M0P_ADC->CR2 = (1UL<<mux);
     M0P_ADC->CR2_f.ADCCNT = cnt-1;
-    M0P_ADC->CR1_f.RACC_EN = 1;
     M0P_ADC->CR1_f.RACC_CLR = 0; /* clear ACC */
-
     M0P_ADC->ICLR_f.CONT_INTC = 0; /* clear CONT_INTF */
     M0P_ADC->CR0_f.STATERST = 1;
     M0P_ADC->CR0_f.START = 1; /* start */
-    while(M0P_ADC->IFR_f.CONT_INTF ==0){};
+    while(M0P_ADC->IFR_f.CONT_INTF == 0){};
     M0P_ADC->ICLR_f.CONT_INTC = 0; /* clear CONT_INTF */
     result = M0P_ADC->RESULT_ACC;
     return (uint16_t)(result/cnt);

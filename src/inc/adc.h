@@ -9,7 +9,7 @@ extern int adc_deinit(void);
 extern uint16_t adc_convert(uint8_t mux, uint8_t cnt);
 
 /* adc.port */
-/* AIN:P24,mux=4, 1V8:P36,mux=6 */
+/* AIN:P24,mux=0, 1V8:P36,mux=6 */
 #include "hw_bare.h"
 #define hal_adc_init()  do {   \
     gpio_analog_port(P2,4);    \
