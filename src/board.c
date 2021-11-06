@@ -2,6 +2,7 @@
 #include "board.h"
 #include "sys.h"
 #include "appcfg.h"
+#include "log.h"
 #include "adc.h"
 #include "tube.h"
 
@@ -49,7 +50,7 @@ static void loop_main(void) {
     static uint16_t _pht_idx = 0;
     uint8_t idx = gDevData.idx;
     /* sens */
-    gDevData.ad_sens[idx] = adc_convert(0, 1);
+    gDevData.ad_sens[idx] = adc_convert(0, 16);
     if(idx >= ADC_BUF_SIZE-1) {
         uint16_t ad;
         /* ad.sens */
@@ -123,7 +124,7 @@ static void loop_main(void) {
             if(gDevData.report <= 1) {
                 gDevData.report = gDevCfg.report;
                 if(gDevData.state == ST_NORMAL) {
-                    tube_show_digi(co2);
+                    tube_show_digi(ad);
                 }
             } else {
                 gDevData.report -= 1;
@@ -132,7 +133,7 @@ static void loop_main(void) {
     } else {
         if((gDevData.state<ST_1V8_READ)&&(idx!=0)) {
             /* read 1v8 */
-            gDevData.ad_1v8 += adc_convert(0, 1);
+            gDevData.ad_1v8 += adc_convert(0, 16);
         }
         gDevData.idx = idx+1;
     }
@@ -142,7 +143,7 @@ static void sync_cfg(void) {
     /* save data */
     gDevCfg.caliCnt += 1;
     appcfg_write(&gDevCfg, sizeof(DevCfg));
-    //dmesg_hex(LOG_INFO, "Save CFG:", (uint8_t *)gDevCfg, sizeof(gDevCfg));
+    dmesg_hex(LOG_INFO, "Save CFG:", (uint8_t *)&gDevCfg, sizeof(gDevCfg));
     /* reset to last N-day's ad0 */
     uint8_t idx = gDevData.cali_idx;
     uint16_t min = gDevData.ad_min;
@@ -165,8 +166,8 @@ static void delay_exec(void) {
     gDevCfg.powerCnt += 1;
     appcfg_write(&gDevCfg, sizeof(DevCfg));
     /* logger */
-    //log_init(LOG_DEBUG);
-    //dmesg_hex(LOG_INFO, "MVQ6600 hwV2.0:", (uint8_t *)gDevCfg, sizeof(gDevCfg));
+    log_init(LOG_DEBUG);
+    dmesg_hex(LOG_INFO, "MVQ6600 hwV2.0:", (uint8_t *)&gDevCfg, sizeof(gDevCfg));
 }
 
 /* ################# main function #################   */
