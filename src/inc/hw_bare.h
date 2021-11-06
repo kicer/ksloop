@@ -7,7 +7,7 @@
 /* porting with ur mcu */
 #include "hc32lx.h"
 
-#define CORE_CLOCK_HZ           (24000000ul)
+#define CORE_CLOCK_HZ           (4000000ul)
 #define SLEEP_CLOCK_HZ          (38400ul)
 #define RTC_CLOCK_HZ            (32768ul)
 

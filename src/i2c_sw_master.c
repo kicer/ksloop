@@ -7,11 +7,11 @@
 /********* -- adapt the defines for your hw -- ********/
 // SDA on port 3, bit 6
 #define SDA_IN()   do { \
-    M0P_GPIO->P3DIR_f.P36 = DIR_OUT; \
+    M0P_GPIO->P3DIR_f.P36 = DIR_IN; \
 } while(0)
 
 #define SDA_OUT()  do { \
-    M0P_GPIO->P3DIR_f.P36 = DIR_IN; \
+    M0P_GPIO->P3DIR_f.P36 = DIR_OUT; \
 } while(0)
 
 #define SDA_LOW()  do { \
@@ -28,11 +28,11 @@
 /********* -- adapt the defines for your hw -- ********/
 // SCL on port 3, bit 5
 #define SCL_IN()   do { \
-    M0P_GPIO->P3DIR_f.P35 = DIR_OUT; \
+    M0P_GPIO->P3DIR_f.P35 = DIR_IN; \
 } while(0)
 
 #define SCL_OUT()  do { \
-    M0P_GPIO->P3DIR_f.P35 = DIR_IN; \
+    M0P_GPIO->P3DIR_f.P35 = DIR_OUT; \
 } while(0)
 
 #define SCL_LOW()  do { \
@@ -99,10 +99,9 @@ int i2c_sw_WriteByte(uint8_t txByte) {
         I2C_LONG_NOP();
         SCL_LOW();
     }
-    I2C_LONG_NOP();
 
     /* read ack */
-    SDA_IN(); SCL_HIGH(); I2C_LONG_NOP();
+    SDA_IN(); I2C_LONG_NOP(); SCL_HIGH(); I2C_LONG_NOP();
     if(SDA_READ) ackBit = 1;
 
     /* to idle */

@@ -14,15 +14,6 @@ uint8_t TUBE_CODE[] = { /* 0-9 */
 #define TUBE_MINUS  0x40
 
 /* ######## TM1650 driver ########## */
-#define	STB_HIGH() 	do {GPIOC->ODR|=(1<<3);} while(0)
-#define	STB_LOW() 	do {GPIOC->ODR&=~(1<<3);} while(0)
-
-#define	CLK_HIGH() 	do {GPIOB->ODR|=(1<<4);} while(0)
-#define	CLK_LOW() 	do {GPIOB->ODR&=~(1<<4);} while(0)
-
-#define	DIN_HIGH() 	do {GPIOB->ODR|=(1<<5);} while(0)
-#define	DIN_LOW() 	do {GPIOB->ODR&=~(1<<5);} while(0)
-
 #define TM1650_CMD_SHOW      0x48
 #define TM1650_SHOW_OFF      0x00
 #define TM1650_MODE_4x8      0x01
@@ -108,5 +99,6 @@ int tube_show_wait(void) {
 
 int tube_init(uint8_t bright_level) {
     tm1650_init();
-    return tube_set_bright(bright_level);
+    //return tube_set_bright(bright_level);
+    return 0;
 }
