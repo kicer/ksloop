@@ -10,7 +10,7 @@ static void app_clk_init(void) {
      * 采用内部RCH时钟作为主时钟，上电后默认为4MHz
      * 进入DeepSleep模式后会自动关闭
      */
-#if 1
+#if 0
     /* switch to 24MHz
      * 切换成24MHz，以便适配串口波特率115200
      */

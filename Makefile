@@ -78,4 +78,4 @@ serial:
 
 flash: $(APP).bin
 	echo "r\nh\nloadbin $(APP).bin 0\nr\nexit\n" |\
-	JLinkExe -device HC32L110 -autoconnect 1 -if SWD -speed 4000
+	JLinkExe -device HC32L110X4 -autoconnect 1 -if SWD -speed 4000
