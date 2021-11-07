@@ -11,7 +11,7 @@ int adc_init(void) {
     M0P_ADC->CR1 = 0x00; /* adc.cr1 init */
     M0P_ADC->CR2 = 0x00; /* adc.cr2 init */
     ADC_DELAY();
-    M0P_ADC->CR0_f.SREF = 1; /* 2.5V */
+    M0P_ADC->CR0_f.SREF = 0; /* 1.5V */
     M0P_ADC->CR0_f.SAM = 3; /* 12cycle */
     M0P_ADC->CR0_f.CLKSEL = 3; /* PCLK/8 */
     M0P_ADC->CR0_f.BUFEN = 1; /* adc op.buf */

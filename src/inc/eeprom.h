@@ -12,10 +12,7 @@ extern int eeprom_block_erase(uint32_t addr);
 extern int eeprom_sector_erase(uint32_t addr);
 
 /* private */
-#define EEPROM_PAGE_SIZE        256
-#define EEPROM_SECTOR_SIZE      4096
-#define EEPROM_BLOCK_SIZE       65536
-#define EEPROM_PAGE_PER_SECTOR  16      /* 4096/256 */
+#define EEPROM_SECTOR_SIZE      512
 
 
 #endif /* _EEPROM_H_ */

@@ -13,7 +13,7 @@ _Min_Leftover_RAM = 0x200;
 
 MEMORY
 {
-    FLASH ( rx )      : ORIGIN = 0x00000000, LENGTH = 16K
+    FLASH ( rx )      : ORIGIN = 0x00000000, LENGTH = 0x3E00
     RAM ( rxw )       : ORIGIN = 0x20000000, LENGTH = 2K
 }
 

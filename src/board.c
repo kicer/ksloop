@@ -124,7 +124,7 @@ static void loop_main(void) {
             if(gDevData.report <= 1) {
                 gDevData.report = gDevCfg.report;
                 if(gDevData.state == ST_NORMAL) {
-                    tube_show_digi(ad);
+                    tube_show_digi(ad-ad0);
                 }
             } else {
                 gDevData.report -= 1;
@@ -167,7 +167,7 @@ static void delay_exec(void) {
     appcfg_write(&gDevCfg, sizeof(DevCfg));
     /* logger */
     log_init(LOG_DEBUG);
-    dmesg_hex(LOG_INFO, "MVQ6600 hwV2.0:", (uint8_t *)&gDevCfg, sizeof(gDevCfg));
+    dmesg_hex(LOG_INFO, "eCO2 hwV2.0:", (uint8_t *)&gDevCfg, sizeof(gDevCfg));
 }
 
 /* ################# main function #################   */

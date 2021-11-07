@@ -27,7 +27,7 @@ extern int appcfg_write(void *cfg, int size);
     #define hal_appcfg_read         eeprom_read
     #define hal_appcfg_write        eeprom_write
     #define hal_appcfg_erase()      eeprom_sector_erase(APPCFG_START_ADDRESS)
-    #define APPCFG_START_ADDRESS    0
+    #define APPCFG_START_ADDRESS    0x3E00
     #define APPCFG_BLOCK_NUMBER     8
     #define APPCFG_BLOCK_SIZE       64
 #else
