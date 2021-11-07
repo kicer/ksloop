@@ -160,14 +160,15 @@ static void sync_cfg(void) {
 }
 
 static void delay_exec(void) {
-    tube_set_bright(6);
-    tube_show_wait();
     /* powerCnt */
     gDevCfg.powerCnt += 1;
     appcfg_write(&gDevCfg, sizeof(DevCfg));
     /* logger */
     log_init(LOG_DEBUG);
     dmesg_hex(LOG_INFO, "eCO2 hwV2.0:", (uint8_t *)&gDevCfg, sizeof(gDevCfg));
+    /* show msg */
+    tube_set_bright(6);
+    tube_show_label((uint8_t *)"bt", 3, gDevCfg.powerCnt);
 }
 
 /* ################# main function #################   */

@@ -4,14 +4,19 @@
 
 
 /* ################# tube functions #################   */
-uint8_t TUBE_CODE[] = { /* 0-9 */
-    0x3F,0x06,0x5B,0x4F,0x66,
-    0x6D,0x7D,0x07,0x7F,0x6F,
+uint8_t TUBE_CODE[] = {
+    /* 0-9 */
+    0x3F,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x6F,
+    /* A-Z */
+    0x77,0x7c,0x39,0x5e,0x79,0x71,0x3d,0x76,0x0f,0x0e,
+    0x75,0x38,0x37,0x54,0x5c,0x73,0x67,0x31,0x49,0x78,
+    0x3e,0x1c,0x7e,0x64,0x6e,0x59
 };
 
 #define TUBE_SIZE   4
-#define TUBE_NULL   0xFF
+#define TUBE_NULL   0x00
 #define TUBE_MINUS  0x40
+#define TUBE_POINT  0x80
 
 /* ######## TM1650 driver ########## */
 #define TM1650_CMD_SHOW      0x48
@@ -69,11 +74,11 @@ int tube_show_digi(uint32_t val) {
 
     /* fix value */
     if(_tube_data[0] == 0) {
-        _tube_data[0] = TUBE_NULL;
+        _tube_data[0] = 0xFF;
         if(_tube_data[1] == 0) {
-            _tube_data[1] = TUBE_NULL;
+            _tube_data[1] = 0xFF;
             if(_tube_data[2] == 0) {
-                _tube_data[2] = TUBE_NULL;
+                _tube_data[2] = 0xFF;
             }
         }
     }
@@ -91,12 +96,39 @@ int tube_show_digi(uint32_t val) {
     return _tube_show(_tube_data);
 }
 
-int tube_show_wait(void) {
+int tube_show_str(uint8_t *pstr, int size) {
     uint8_t _tube_data[TUBE_SIZE];
     for(int i=0; i<TUBE_SIZE; i++) {
-        _tube_data[i] = TUBE_MINUS;
+        uint8_t code = TUBE_NULL;
+        if(size >= TUBE_SIZE-i) {
+            uint8_t ch = pstr[i];
+            if((ch>='a')&&(ch<='z')) {
+                code = TUBE_CODE[ch-'a'+10];
+            } else if((ch>='A')&&(ch<='Z')) {
+                code = TUBE_CODE[ch-'A'+10]|TUBE_POINT;
+            } else if((ch>='0')&&(ch<='9')) {
+                code = TUBE_CODE[ch-'0'];
+            } else if(ch == '-') {
+                code = TUBE_MINUS;
+            } else if(ch == '.') {
+                code = TUBE_POINT;
+            }
+        }
+        _tube_data[i] = code;
     }
     return _tube_show(_tube_data);
+}
+
+int tube_show_label(uint8_t *pstr, int size, uint32_t val) {
+    uint8_t dat[4];
+    for(int i=0; i<size; i++) {
+        dat[i] = pstr[i];
+    }
+    for(int i=size; i<4; i++) {
+        dat[4+size-i-1] = '0'+val%10;
+        val = val/10;
+    }
+    return tube_show_str(dat, sizeof(dat));
 }
 
 int tube_init(void) {
