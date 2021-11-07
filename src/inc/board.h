@@ -7,7 +7,7 @@
 #define EVENT_UART_RECV_PKG     1
 #define EVENT_UART_SEND_PKG     2
 
-#define MAGIC_CODE        (0x20211025) /* 2021-10-25 */
+#define MAGIC_CODE        (0x20211107) /* 2021-11-07 */
 #define SENS_ID0          0x6B
 #define SENS_ID1          0x30
 

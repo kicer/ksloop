@@ -120,13 +120,21 @@ int tube_show_str(uint8_t *pstr, int size) {
 }
 
 int tube_show_label(uint8_t *pstr, int size, uint32_t val) {
-    uint8_t dat[4];
+    uint8_t dat[4], _skipF;
     for(int i=0; i<size; i++) {
         dat[i] = pstr[i];
     }
     for(int i=size; i<4; i++) {
         dat[4+size-i-1] = '0'+val%10;
         val = val/10;
+    }
+    _skipF = 1;
+    for(int i=size; i<4; i++) {
+        if((_skipF) && (dat[i]=='0')) {
+            dat[i] = 0;
+        } else {
+            _skipF = 0;
+        }
     }
     return tube_show_str(dat, sizeof(dat));
 }

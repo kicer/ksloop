@@ -36,7 +36,7 @@ static void load_config(void) {
         gDevCfg.ad0 = 0xFFFF;
         gDevCfg.k1 = 0x0123;
         gDevCfg.k2 = 13;
-        gDevCfg.k3 = 213;
+        gDevCfg.k3 = 100;
         gDevCfg.factor = 20;
         gDevCfg.magic = MAGIC_CODE;
     }
@@ -124,7 +124,7 @@ static void loop_main(void) {
             if(gDevData.report <= 1) {
                 gDevData.report = gDevCfg.report;
                 if(gDevData.state == ST_NORMAL) {
-                    tube_show_digi(ad-ad0);
+                    tube_show_digi(co2);
                 }
             } else {
                 gDevData.report -= 1;
@@ -168,7 +168,7 @@ static void delay_exec(void) {
     dmesg_hex(LOG_INFO, "eCO2 hwV2.0:", (uint8_t *)&gDevCfg, sizeof(gDevCfg));
     /* show msg */
     tube_set_bright(6);
-    tube_show_label((uint8_t *)"bt", 3, gDevCfg.powerCnt);
+    tube_show_label((uint8_t *)"B", 1, gDevCfg.powerCnt);
 }
 
 /* ################# main function #################   */
