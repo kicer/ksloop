@@ -25,8 +25,9 @@ typedef struct {
     uint16_t ad;
     uint16_t ad0;
     uint16_t tvoc;
-    uint16_t hcho;  /* eHCHO */
-    uint16_t co2;  /* eCO2  */
+    uint16_t hcho;   /* eHCHO */
+    uint16_t co2;    /* eCO2  */
+    uint16_t level;  /* quality level:0~100 */
     /* private */
     uint8_t idx;
     uint8_t report;

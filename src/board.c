@@ -48,8 +48,18 @@ static void tube_debug_msg(int code) {
             tube_show_digi(gDevData.ad_min, 0x07);
             break;
         case 13:
+            tube_show_label((uint8_t *)"T",1,adc_ts());
+            break;
+        case 14:
+            tube_show_label((uint8_t *)"L",1,gDevData.level);
+            break;
+        case 15:
+        case 16:
+        case 17:
+        case 18:
+        case 19:
             tube_show_digi(gDevData.co2, 0);
-            step = 9; /* 循环显示 */
+            if(step>=19) step = 9; /* 循环显示 */
             break;
         default: /* 显示预热时间 */
             if(gDevData.state == ST_NORMAL) {
@@ -154,6 +164,21 @@ static void sens_raw_cb(uint16_t raw_ad) {
     }
     /* 赋值 */
     gDevData.co2 = 400+sens;
+    if(1) { /* 计算空气质量等级 */
+        uint16_t val = gDevData.co2;
+        uint16_t level = 0;
+        /* 400:100, 1000:80, 1800:60, 5000:0 */
+        if(val<400) {
+            level = 100;
+        } else if(val<1000) {
+            level = 100-(val-400)/30;
+        } else if(val<1800) {
+            level = 80-(val-1000)/40;
+        } else if(val<5000) {
+            level = 60-3*(val-1800)/160;
+        }
+        gDevData.level = level;
+    }
     sens_last = sens;
     raw_last = raw_ad;
     /* report */
