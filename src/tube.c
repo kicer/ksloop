@@ -64,7 +64,7 @@ int tube_set_bright(uint8_t level) {
     return ack_err;
 }
 
-int tube_show_digi(uint32_t val) {
+int tube_show_digi(uint32_t val, uint8_t point) {
     uint8_t _tube_data[TUBE_SIZE];
     if(val > 9999) val = 9999;
     _tube_data[3] = val%10; val = val/10;
@@ -87,6 +87,7 @@ int tube_show_digi(uint32_t val) {
         uint8_t ch = _tube_data[i];
         if(ch<10) {
             ch = TUBE_CODE[ch];
+            if(point&(1<<(TUBE_SIZE-i-1))) ch |= TUBE_POINT;
         } else {
             ch = 0x00;
         }
@@ -129,7 +130,7 @@ int tube_show_label(uint8_t *pstr, int size, uint32_t val) {
         val = val/10;
     }
     _skipF = 1;
-    for(int i=size; i<4; i++) {
+    for(int i=size; i<4-1; i++) {
         if((_skipF) && (dat[i]=='0')) {
             dat[i] = 0;
         } else {
