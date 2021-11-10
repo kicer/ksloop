@@ -45,7 +45,7 @@ typedef struct {
     uint16_t k1;
     uint16_t k2;
     uint16_t k3;
-    uint16_t ad0;
+    uint16_t ad0; /* expire.var, not used! */
     uint16_t zeroRstCnt;
     uint16_t caliCnt;
     /* long-time ad0 logic */

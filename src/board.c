@@ -24,7 +24,7 @@ static void tube_debug_msg(int code) {
     switch(step) {
         case 0: /* 显示版本 */
         case 1: /* 显示版本A1 */
-            tube_show_str((uint8_t *)"V a1", 4);
+            tube_show_str((uint8_t *)"Va05", 4);
             break;
         case 2: /* 显示启动次数 */
         case 3: /* 显示启动次数 */
@@ -36,7 +36,7 @@ static void tube_debug_msg(int code) {
             break;
         case 6:
         case 7:
-            tube_show_digi(gDevCfg.ad0, 0x0F);
+            tube_show_digi(gDevData.ad0, 0x0F);
             break;
         case 10:
             tube_show_digi(gDevData.ad, 0x01);
@@ -58,13 +58,25 @@ static void tube_debug_msg(int code) {
         case 17:
         case 18:
         case 19:
+        case 20:
+        case 21:
+        case 22:
+        case 23:
+        case 24:
             tube_show_digi(gDevData.co2, 0);
-            if(step>=19) step = 9; /* 循环显示 */
+            break;
+        case 25:
+            tube_show_digi(gDevData.co2, 0);
+#ifdef TUBE_DEBUG_MODE
+            step = 9; /* 循环显示 */
+#else
+            step = 13;
+#endif
             break;
         default: /* 显示预热时间 */
             if(gDevData.state == ST_NORMAL) {
-                tube_show_digi(gDevData.ad, 0x01);
-                step = 10;
+                tube_show_digi(gDevData.co2, 0);
+                step = 15;
             } else {
                 tube_show_label((uint8_t *)"ht", 2, code);
                 step = 7;
@@ -198,7 +210,7 @@ static void loop_main(void) {
     if(idx >= ADC_BUF_SIZE-1) {
         uint16_t ad;
         /* ad.sens */
-        uint16_t _sum = 0;
+        uint32_t _sum = 0;
         uint16_t _ad_min = gDevData.ad_sens[0];
         uint16_t _ad_max = gDevData.ad_sens[0];
         for(int i=0; i<ADC_BUF_SIZE; i++) {
@@ -207,7 +219,7 @@ static void loop_main(void) {
             if(ad < _ad_min) _ad_min = ad;
             if(ad > _ad_max) _ad_max = ad;
         }
-        ad = _sum-_ad_min-_ad_max;
+        ad = (_sum-_ad_min-_ad_max)/(ADC_BUF_SIZE-4);
         gDevData.idx = 0;
         if(gDevData.preheat > 0) gDevData.preheat -= 1;
         sens_raw_cb(ad);
@@ -216,21 +228,28 @@ static void loop_main(void) {
     }
 }
 
+static uint16_t calc_next_ad0(void) {
+    /* 遍历并拉取缓存数据，以均值作为下周期零点值 */
+    uint8_t _cnt = 0; uint32_t _sum = 0;
+    for(int i=0; i<ZERO_DAYS_CNT; i++) {
+        uint16_t n = gDevCfg.cali_buf[i];
+        if(n != 0) {
+            _cnt += 1;
+            _sum += n;
+        }
+    }
+    if(_cnt == 0) return 0xFFFF;
+    return (uint16_t)(_sum/_cnt);
+}
+
 static void sync_cfg(void) {
-    /* 本周期内有效的最低值作为零点值
-     * 遍历并拉取缓存数据，以最低值作为下周期零点值
-     */
+    /* 本周期内有效的最低值作为零点值 */
     uint8_t idx = gDevCfg.cali_idx;
     uint16_t min = gDevData.ad_min;
     gDevCfg.cali_buf[idx%ZERO_DAYS_CNT] = min;
-    for(int i=0; i<ZERO_DAYS_CNT; i++) {
-        uint16_t n = gDevCfg.cali_buf[i];
-        if((n!=0)&&(n<min)) min = n;
-    }
     gDevCfg.cali_idx = idx+1;
     /* set ad-zero */
-    gDevData.ad0 = min;
-    gDevCfg.ad0 = min;
+    gDevData.ad0 = calc_next_ad0();
     gDevData.ad_min = 0xFFFF;
     /* save data */
     gDevCfg.caliCnt += 1;
@@ -252,7 +271,6 @@ static void load_config(void) {
         gDevCfg.preheat = 30;   /* 预热30s+动态30s */
         gDevCfg.report = 1;     /* 1s报告一次数据 */
         gDevCfg.syncTime = 8;   /* 8小时同步一次标定数据 */
-        gDevCfg.ad0 = 0xFFFF;   /* 默认零点AD值 */
         gDevCfg.k1 = 100;       /* k.tvoc */
         gDevCfg.k2 = 100;       /* k.hcho */
         gDevCfg.k3 = 100;       /* k.co2 */
@@ -260,7 +278,7 @@ static void load_config(void) {
         gDevCfg.zeroRstCnt = 120; /* 归0两分钟后计算零点 */
         gDevCfg.magic = MAGIC_CODE;
     }
-    gDevData.ad0 = gDevCfg.ad0;
+    gDevData.ad0 = calc_next_ad0();
     gDevData.ad_min = 0xFFFF;
     gDevData.state = ST_LOAD_CFG;
     gDevData.preheat = gDevCfg.preheat;
