@@ -6,6 +6,10 @@
 **      enInterrupts()
 **      noInterrupts()
 **      swReset()
+**      nop()
+**      wfi()
+**      nvic_irq_enable(irq,level)
+**      nvic_irq_disable()
 */
 
 #ifndef _HWB_AUX_H_
@@ -31,18 +35,35 @@
 */
 #define swReset()               NVIC_SystemReset()
 
-#define BIT(x)                  (1ul << (x))
-#define try_param(x)            ((void)x)
-#define hex2ch(c)               ((c)>=10?'A'+(c)-10:'0'+(c))
+/* nop()
+**  : nop 
+*/
+#define nop()                   __NOP()
 
-#define BSP_enableInterrupt     __enable_irq
-#define BSP_SWReset             NVIC_SystemReset
-#define BSP_wfi()               __asm__("WFI")
+/* wfi()
+**  : Wait For Interrupt
+*/
+#define wfi()                   __WFI()
+
+/* nvic_irq_enable()
+**  : NVIC irq enable
+*/
+#define nvic_irq_enable(irq,level) do { \
+    NVIC_ClearPendingIRQ(irq);          \
+    NVIC_SetPriority(irq, level);       \
+    NVIC_EnableIRQ(irq);                \
+} while(0)
+
+/* nvic_irq_disable()
+**  : NVIC irq disable
+*/
+#define nvic_irq_disable      NVIC_DisableIRQ
 
 /*
  ** some useful bit tricks
  */
-#define bitmask(b)      (1<<(b))
+#define BIT(x)          (1<<(x))
+#define bitmask(b)      BIT(b)
 #define testbits(x,m)   ((x) & (m))
 
 #ifndef cast
@@ -63,17 +84,7 @@
 #define hwb_abort()     while(1)
 #endif
 
-/* ################### Helper Action ######################## */
-#define nvic_irq_enable(irq,level) do { \
-    NVIC_ClearPendingIRQ(irq);          \
-    NVIC_SetPriority(irq, level);       \
-    NVIC_EnableIRQ(irq);                \
-} while(0)
+#define hex2ch(c)       ((c)>=10?'A'+(c)-10:'0'+(c))
 
-#define nvic_irq_disable      NVIC_DisableIRQ
-
-extern void hw_delay_init(void);
-extern void hw_delay_us(uint32_t us);
-extern int64_t hw_uptime(void);
 
 #endif /* _HWB_AUX_H_ */

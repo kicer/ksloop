@@ -61,17 +61,12 @@
 #define pinFunc_AF7(o,p)            gpio_afsel(o,p,7)
 
 /* digitalWrite(pin,value)
-**  : digitalWrite(IO_P35, LOW)     # or 0
-**  : digitalWrite(IO_P35, HIGH)    # or 1
+**  : digitalWrite(IO_P35, 0)
 */
-#define digitalWrite(P,m)           digitalWrite_##m(P)
-#define digitalWrite_0(o,p)         gpio_out(o,p,0)
-#define digitalWrite_1(o,p)         gpio_out(o,p,1)
-#define digitalWrite_LOW(o,p)       gpio_out(o,p,0)
-#define digitalWrite_HIGH(o,p)      gpio_out(o,p,1)
+#define digitalWrite(P,v)           gpio_out(P,(v))
 
 /* digitalRead(pin)
-**  : digitalWrite(IO_P35)
+**  : digitalRead(IO_P35)
 */
 #define digitalRead(P)              gpio_read(P)
 
