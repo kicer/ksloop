@@ -20,7 +20,7 @@
 /*
 ** hw_bare config
 */
-#define RCL_CLOCK_HZ            (32768ul)   /* for os core clock */
+#define CORE_CLOCK_HZ           (32768ul)   /* for os core clock */
 #define HWB_OS_USE_LPTIM        1           /* LPTIM/SYSTICK */
 #define HWB_OS_TASK_STACK_SIZE  8           /* depth of task */
 #define HWB_OS_1TS              100         /* os tick, unit=ms */

@@ -164,7 +164,7 @@ static void Ticks_Config(int ts) {
     M0P_CLOCK->PERI_CLKEN_f.LPTIM = 1;
     M0P_LPTIMER->CR_f.TR = 0;
     M0P_LPTIMER->CR_f.CT = 0;
-    M0P_LPTIMER->CR_f.MD = 0;
+    M0P_LPTIMER->CR_f.MD = 1;
     M0P_LPTIMER->CR_f.GATE = 0;
     M0P_LPTIMER->CR_f.TCK_SEL = 3; /* clock=RCL */
     M0P_LPTIMER->ICLR_f.TFC = 0;
@@ -172,7 +172,7 @@ static void Ticks_Config(int ts) {
     nvic_irq_enable(LPTIM_IRQn, HWB_IRQ_PRIO_DEFAULT);
     /* wait write flag */
     while(M0P_LPTIMER->CR_f.WT_FLAG == 0) nop();
-    M0P_LPTIMER->ARR_f.ARR = 0xFFFF-(RCL_CLOCK_HZ*_1TS+500)/1000;
+    M0P_LPTIMER->ARR_f.ARR = 0xFFFF-(CORE_CLOCK_HZ*_1TS+500)/1000;
     M0P_LPTIMER->CR_f.TR = 1;
 #else
     #error "Please defined the OS's ticks source"
@@ -193,11 +193,11 @@ static void Ticks_Sleep(void) {
  */
 #if defined(HWB_OS_USE_LPTIM)
 void __attribute__((weak)) LPTIM_IRQn_handler(void) {
+    M0P_LPTIMER->ICLR_f.TFC = 0;
     sys_event_trigger(EVENT_SYSTICKS);
 }
-#elif defined(HWB_OS_USE_LPTIM)
+#elif defined(HWB_OS_USE_SYSTICK)
 void __attribute__((weak)) SysTick_IRQn_handler(void) {
-    M0P_LPTIMER->ICLR_f.TFC = 0;
     sys_event_trigger(EVENT_SYSTICKS);
 }
 #endif
