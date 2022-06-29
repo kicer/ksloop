@@ -40,10 +40,10 @@
 * at all times.
 */
 /******************************************************************************/
-/** \\file HC32L130E8PA.h
+/** \\file HC32L130E8.h
 **
 ** Auto generate.
-** Headerfile for HC32L130E8PA series MCU
+** Headerfile for HC32L130E8 series MCU
 **
 ** History:
 **
@@ -51,8 +51,8 @@
 **
 ******************************************************************************/
 
-#ifndef __HC32L130E8PA_H__
-#define __HC32L130E8PA_H__
+#ifndef __HC32L130E8_H__
+#define __HC32L130E8_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -8116,5 +8116,5 @@ typedef struct
 }
 #endif
 
-#endif /* __HC32L130E8PA_H__ */
+#endif /* __HC32L130E8_H__ */
 

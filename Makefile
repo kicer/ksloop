@@ -73,9 +73,9 @@ CCOMPILEDFILES=$(SOURCES:.c=.S) $(SOURCES:.c=.d) $(OBJECTS)
 clean:
 	rm -f $(APP).bin $(APP).hex $(APP).elf $(APP).map $(CCOMPILEDFILES)
 
-serial:
+serial: $(APP).bin
 	$(FLASHTOOL)/hc32flash.py -d $(DEVICE) -p $(SERIAL) -u -w $(APP).bin -b 115200 -R
 
 flash: $(APP).bin
 	echo "r\nh\nloadbin $(APP).bin 0\nr\nexit\n" |\
-	JLinkExe -device HC32L110X4 -autoconnect 1 -if SWD -speed 4000
+	JLinkExe -device $(DEVICE) -autoconnect 1 -if SWD -speed 4000

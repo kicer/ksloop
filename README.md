@@ -1,32 +1,25 @@
-# ksloop, HC32L130
+# ksloop, hc32lx
 
 
-## 缘起
-室外有害气体监测仪。
+## 低功耗 
 
-* 电池供电、低功耗
-* 蓝牙调试配置
-* EC600N 4G上传
-* 4路电化学传感器
-* SHT30温湿度传感器
-* 磁控开关、水银开关
-* W25Q128外扩16MB FLASH
-* 蜂鸣器报警
-* RTC数据时间、定时同步
-* 电池电量监测上报
-* 数据打包定时上报
-* 传感器数据温湿度修正
-* 传感器标定及数值修正
-* OTA固件升级
+`hw_bare os`模块支持SYSTICK/LPTIM驱动，采用LPTIM驱动时使用深度睡眠模式。
+系统时钟默认采用RCL=32768Hz。
 
 
-### ADC采样问题
-ADC采用扫描转换模式，多次采样取均值。
-但采样得到的ADC数据偏小，且极不稳定。
-调试后确认有以下几方面原因：
+## GPIO接口
 
-1. ADC需要尽可能慢速采样，CLKDIV=/8
-2. SQR2.CNT需配置正确，是测量次数-1
-3. 电源需保证稳定，当前电路DCDC后电源纹波过大
-4. CR0.BUF打开，启用放大器。当前为高阻信号驱动能力弱
+采用类Arduino风格的接口，支持pinMode/digitalRead/digitalWrite等，同时扩展pinFunc函数用于定义IO包括上下拉电阻、OD、端口复用等功能。
 
+
+## 串口下载
+
+支持通过P35/P36串口下载烧录，JLinkExe下载功能未完全测试。
+烧录时连接串口RTS至MCU reset引脚，用于烧录前后复位。
+
+
+## startup文件
+通过工具`scripts/generate_vt.py`，根据`bsp/inc/*.h`文件手工生成。
+```bash
+python3 scripts/generate_vt.py hc32l130k8 cortex-m0plus
+```

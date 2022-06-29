@@ -40,10 +40,10 @@
 * at all times.
 */
 /******************************************************************************/
-/** \\file HC32L130F8UA.h
+/** \\file HC32L130J8.h
 **
 ** Auto generate.
-** Headerfile for HC32L130F8UA series MCU
+** Headerfile for HC32L130J8 series MCU
 **
 ** History:
 **
@@ -51,8 +51,8 @@
 **
 ******************************************************************************/
 
-#ifndef __HC32L130F8UA_H__
-#define __HC32L130F8UA_H__
+#ifndef __HC32L130J8_H__
+#define __HC32L130J8_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -357,18 +357,19 @@ typedef struct
     __IO uint32_t SPI0                      : 1;
     __IO uint32_t SPI1                      : 1;
     __IO uint32_t DMA                       : 1;
-    uint32_t RESERVED18                     : 1;
+    __IO uint32_t PA03                      : 1;
     __IO uint32_t PB03                      : 1;
     uint32_t RESERVED20                     : 1;
     __IO uint32_t PD03                      : 1;
     __IO uint32_t PA07                      : 1;
     __IO uint32_t PB07                      : 1;
-    uint32_t RESERVED24                     : 2;
+    uint32_t RESERVED24                     : 1;
+    __IO uint32_t PD07                      : 1;
     __IO uint32_t PA11                      : 1;
     __IO uint32_t PB11                      : 1;
     uint32_t RESERVED28                     : 1;
     __IO uint32_t PA15                      : 1;
-    uint32_t RESERVED30                     : 1;
+    __IO uint32_t PB15                      : 1;
     __IO uint32_t PC15                      : 1;
 } stc_adc_exttrigger0_field_t;
 
@@ -392,18 +393,19 @@ typedef struct
     __IO uint32_t SPI0                      : 1;
     __IO uint32_t SPI1                      : 1;
     __IO uint32_t DMA                       : 1;
-    uint32_t RESERVED18                     : 1;
+    __IO uint32_t PA03                      : 1;
     __IO uint32_t PB03                      : 1;
     uint32_t RESERVED20                     : 1;
     __IO uint32_t PD03                      : 1;
     __IO uint32_t PA07                      : 1;
     __IO uint32_t PB07                      : 1;
-    uint32_t RESERVED24                     : 2;
+    uint32_t RESERVED24                     : 1;
+    __IO uint32_t PD07                      : 1;
     __IO uint32_t PA11                      : 1;
     __IO uint32_t PB11                      : 1;
     uint32_t RESERVED28                     : 1;
     __IO uint32_t PA15                      : 1;
-    uint32_t RESERVED30                     : 1;
+    __IO uint32_t PB15                      : 1;
     __IO uint32_t PC15                      : 1;
 } stc_adc_exttrigger1_field_t;
 
@@ -712,7 +714,22 @@ typedef struct
 typedef struct
 {
     __IO uint32_t SEL                       : 3;
+} stc_gpio_pa00_sel_field_t;
+
+typedef struct
+{
+    __IO uint32_t SEL                       : 3;
+} stc_gpio_pa01_sel_field_t;
+
+typedef struct
+{
+    __IO uint32_t SEL                       : 3;
 } stc_gpio_pa02_sel_field_t;
+
+typedef struct
+{
+    __IO uint32_t SEL                       : 3;
+} stc_gpio_pa03_sel_field_t;
 
 typedef struct
 {
@@ -787,6 +804,11 @@ typedef struct
 typedef struct
 {
     __IO uint32_t SEL                       : 3;
+} stc_gpio_pb02_sel_field_t;
+
+typedef struct
+{
+    __IO uint32_t SEL                       : 3;
 } stc_gpio_pb03_sel_field_t;
 
 typedef struct
@@ -812,7 +834,47 @@ typedef struct
 typedef struct
 {
     __IO uint32_t SEL                       : 3;
+} stc_gpio_pb08_sel_field_t;
+
+typedef struct
+{
+    __IO uint32_t SEL                       : 3;
+} stc_gpio_pb09_sel_field_t;
+
+typedef struct
+{
+    __IO uint32_t SEL                       : 3;
+} stc_gpio_pb10_sel_field_t;
+
+typedef struct
+{
+    __IO uint32_t SEL                       : 3;
 } stc_gpio_pb11_sel_field_t;
+
+typedef struct
+{
+    __IO uint32_t SEL                       : 3;
+} stc_gpio_pb12_sel_field_t;
+
+typedef struct
+{
+    __IO uint32_t SEL                       : 3;
+} stc_gpio_pb13_sel_field_t;
+
+typedef struct
+{
+    __IO uint32_t SEL                       : 3;
+} stc_gpio_pb14_sel_field_t;
+
+typedef struct
+{
+    __IO uint32_t SEL                       : 3;
+} stc_gpio_pb15_sel_field_t;
+
+typedef struct
+{
+    __IO uint32_t SEL                       : 3;
+} stc_gpio_pc13_sel_field_t;
 
 typedef struct
 {
@@ -841,9 +903,20 @@ typedef struct
 
 typedef struct
 {
-    uint32_t RESERVED0                      : 2;
+    __IO uint32_t SEL                       : 3;
+} stc_gpio_pd06_sel_field_t;
+
+typedef struct
+{
+    __IO uint32_t SEL                       : 3;
+} stc_gpio_pd07_sel_field_t;
+
+typedef struct
+{
+    __IO uint32_t PA00                      : 1;
+    __IO uint32_t PA01                      : 1;
     __IO uint32_t PA02                      : 1;
-    uint32_t RESERVED3                      : 1;
+    __IO uint32_t PA03                      : 1;
     __IO uint32_t PA04                      : 1;
     __IO uint32_t PA05                      : 1;
     __IO uint32_t PA06                      : 1;
@@ -860,9 +933,10 @@ typedef struct
 
 typedef struct
 {
-    uint32_t RESERVED0                      : 2;
+    __IO uint32_t PA00                      : 1;
+    __IO uint32_t PA01                      : 1;
     __IO uint32_t PA02                      : 1;
-    uint32_t RESERVED3                      : 1;
+    __IO uint32_t PA03                      : 1;
     __IO uint32_t PA04                      : 1;
     __IO uint32_t PA05                      : 1;
     __IO uint32_t PA06                      : 1;
@@ -879,9 +953,10 @@ typedef struct
 
 typedef struct
 {
-    uint32_t RESERVED0                      : 2;
+    __IO uint32_t PA00                      : 1;
+    __IO uint32_t PA01                      : 1;
     __IO uint32_t PA02                      : 1;
-    uint32_t RESERVED3                      : 1;
+    __IO uint32_t PA03                      : 1;
     __IO uint32_t PA04                      : 1;
     __IO uint32_t PA05                      : 1;
     __IO uint32_t PA06                      : 1;
@@ -898,9 +973,10 @@ typedef struct
 
 typedef struct
 {
-    uint32_t RESERVED0                      : 2;
+    __IO uint32_t PA00                      : 1;
+    __IO uint32_t PA01                      : 1;
     __IO uint32_t PA02                      : 1;
-    uint32_t RESERVED3                      : 1;
+    __IO uint32_t PA03                      : 1;
     __IO uint32_t PA04                      : 1;
     __IO uint32_t PA05                      : 1;
     __IO uint32_t PA06                      : 1;
@@ -917,9 +993,10 @@ typedef struct
 
 typedef struct
 {
-    uint32_t RESERVED0                      : 2;
+    __IO uint32_t PA00                      : 1;
+    __IO uint32_t PA01                      : 1;
     __IO uint32_t PA02                      : 1;
-    uint32_t RESERVED3                      : 1;
+    __IO uint32_t PA03                      : 1;
     __IO uint32_t PA04                      : 1;
     __IO uint32_t PA05                      : 1;
     __IO uint32_t PA06                      : 1;
@@ -936,9 +1013,10 @@ typedef struct
 
 typedef struct
 {
-    uint32_t RESERVED0                      : 2;
+    __IO uint32_t PA00                      : 1;
+    __IO uint32_t PA01                      : 1;
     __IO uint32_t PA02                      : 1;
-    uint32_t RESERVED3                      : 1;
+    __IO uint32_t PA03                      : 1;
     __IO uint32_t PA04                      : 1;
     __IO uint32_t PA05                      : 1;
     __IO uint32_t PA06                      : 1;
@@ -961,9 +1039,10 @@ typedef struct
 
 typedef struct
 {
-    uint32_t RESERVED0                      : 2;
+    __IO uint32_t PA00                      : 1;
+    __IO uint32_t PA01                      : 1;
     __IO uint32_t PA02                      : 1;
-    uint32_t RESERVED3                      : 1;
+    __IO uint32_t PA03                      : 1;
     __IO uint32_t PA04                      : 1;
     __IO uint32_t PA05                      : 1;
     __IO uint32_t PA06                      : 1;
@@ -980,9 +1059,10 @@ typedef struct
 
 typedef struct
 {
-    uint32_t RESERVED0                      : 2;
+    __IO uint32_t PA00                      : 1;
+    __IO uint32_t PA01                      : 1;
     __IO uint32_t PA02                      : 1;
-    uint32_t RESERVED3                      : 1;
+    __IO uint32_t PA03                      : 1;
     __IO uint32_t PA04                      : 1;
     __IO uint32_t PA05                      : 1;
     __IO uint32_t PA06                      : 1;
@@ -999,9 +1079,10 @@ typedef struct
 
 typedef struct
 {
-    uint32_t RESERVED0                      : 2;
+    __IO uint32_t PA00                      : 1;
+    __IO uint32_t PA01                      : 1;
     __IO uint32_t PA02                      : 1;
-    uint32_t RESERVED3                      : 1;
+    __IO uint32_t PA03                      : 1;
     __IO uint32_t PA04                      : 1;
     __IO uint32_t PA05                      : 1;
     __IO uint32_t PA06                      : 1;
@@ -1018,9 +1099,10 @@ typedef struct
 
 typedef struct
 {
-    uint32_t RESERVED0                      : 2;
+    __IO uint32_t PA00                      : 1;
+    __IO uint32_t PA01                      : 1;
     __IO uint32_t PA02                      : 1;
-    uint32_t RESERVED3                      : 1;
+    __IO uint32_t PA03                      : 1;
     __IO uint32_t PA04                      : 1;
     __IO uint32_t PA05                      : 1;
     __IO uint32_t PA06                      : 1;
@@ -1037,9 +1119,10 @@ typedef struct
 
 typedef struct
 {
-    uint32_t RESERVED0                      : 2;
+    __IO uint32_t PA00                      : 1;
+    __IO uint32_t PA01                      : 1;
     __IO uint32_t PA02                      : 1;
-    uint32_t RESERVED3                      : 1;
+    __IO uint32_t PA03                      : 1;
     __IO uint32_t PA04                      : 1;
     __IO uint32_t PA05                      : 1;
     __IO uint32_t PA06                      : 1;
@@ -1056,9 +1139,10 @@ typedef struct
 
 typedef struct
 {
-    uint32_t RESERVED0                      : 2;
+    __IO uint32_t PA00                      : 1;
+    __IO uint32_t PA01                      : 1;
     __IO uint32_t PA02                      : 1;
-    uint32_t RESERVED3                      : 1;
+    __IO uint32_t PA03                      : 1;
     __IO uint32_t PA04                      : 1;
     __IO uint32_t PA05                      : 1;
     __IO uint32_t PA06                      : 1;
@@ -1075,9 +1159,10 @@ typedef struct
 
 typedef struct
 {
-    uint32_t RESERVED0                      : 2;
+    __IO uint32_t PA00                      : 1;
+    __IO uint32_t PA01                      : 1;
     __IO uint32_t PA02                      : 1;
-    uint32_t RESERVED3                      : 1;
+    __IO uint32_t PA03                      : 1;
     __IO uint32_t PA04                      : 1;
     __IO uint32_t PA05                      : 1;
     __IO uint32_t PA06                      : 1;
@@ -1094,9 +1179,10 @@ typedef struct
 
 typedef struct
 {
-    uint32_t RESERVED0                      : 2;
+    __IO uint32_t PA00                      : 1;
+    __IO uint32_t PA01                      : 1;
     __IO uint32_t PA02                      : 1;
-    uint32_t RESERVED3                      : 1;
+    __IO uint32_t PA03                      : 1;
     __IO uint32_t PA04                      : 1;
     __IO uint32_t PA05                      : 1;
     __IO uint32_t PA06                      : 1;
@@ -1115,84 +1201,120 @@ typedef struct
 {
     __IO uint32_t PB00                      : 1;
     __IO uint32_t PB01                      : 1;
-    uint32_t RESERVED2                      : 1;
+    __IO uint32_t PB02                      : 1;
     __IO uint32_t PB03                      : 1;
     __IO uint32_t PB04                      : 1;
     __IO uint32_t PB05                      : 1;
     __IO uint32_t PB06                      : 1;
     __IO uint32_t PB07                      : 1;
-    uint32_t RESERVED8                      : 3;
+    __IO uint32_t PB08                      : 1;
+    __IO uint32_t PB09                      : 1;
+    __IO uint32_t PB10                      : 1;
     __IO uint32_t PB11                      : 1;
+    __IO uint32_t PB12                      : 1;
+    __IO uint32_t PB13                      : 1;
+    __IO uint32_t PB14                      : 1;
+    __IO uint32_t PB15                      : 1;
 } stc_gpio_pbdir_field_t;
 
 typedef struct
 {
     __IO uint32_t PB00                      : 1;
     __IO uint32_t PB01                      : 1;
-    uint32_t RESERVED2                      : 1;
+    __IO uint32_t PB02                      : 1;
     __IO uint32_t PB03                      : 1;
     __IO uint32_t PB04                      : 1;
     __IO uint32_t PB05                      : 1;
     __IO uint32_t PB06                      : 1;
     __IO uint32_t PB07                      : 1;
-    uint32_t RESERVED8                      : 3;
+    __IO uint32_t PB08                      : 1;
+    __IO uint32_t PB09                      : 1;
+    __IO uint32_t PB10                      : 1;
     __IO uint32_t PB11                      : 1;
+    __IO uint32_t PB12                      : 1;
+    __IO uint32_t PB13                      : 1;
+    __IO uint32_t PB14                      : 1;
+    __IO uint32_t PB15                      : 1;
 } stc_gpio_pbin_field_t;
 
 typedef struct
 {
     __IO uint32_t PB00                      : 1;
     __IO uint32_t PB01                      : 1;
-    uint32_t RESERVED2                      : 1;
+    __IO uint32_t PB02                      : 1;
     __IO uint32_t PB03                      : 1;
     __IO uint32_t PB04                      : 1;
     __IO uint32_t PB05                      : 1;
     __IO uint32_t PB06                      : 1;
     __IO uint32_t PB07                      : 1;
-    uint32_t RESERVED8                      : 3;
+    __IO uint32_t PB08                      : 1;
+    __IO uint32_t PB09                      : 1;
+    __IO uint32_t PB10                      : 1;
     __IO uint32_t PB11                      : 1;
+    __IO uint32_t PB12                      : 1;
+    __IO uint32_t PB13                      : 1;
+    __IO uint32_t PB14                      : 1;
+    __IO uint32_t PB15                      : 1;
 } stc_gpio_pbout_field_t;
 
 typedef struct
 {
     __IO uint32_t PB00                      : 1;
     __IO uint32_t PB01                      : 1;
-    uint32_t RESERVED2                      : 1;
+    __IO uint32_t PB02                      : 1;
     __IO uint32_t PB03                      : 1;
     __IO uint32_t PB04                      : 1;
     __IO uint32_t PB05                      : 1;
     __IO uint32_t PB06                      : 1;
     __IO uint32_t PB07                      : 1;
-    uint32_t RESERVED8                      : 3;
+    __IO uint32_t PB08                      : 1;
+    __IO uint32_t PB09                      : 1;
+    __IO uint32_t PB10                      : 1;
     __IO uint32_t PB11                      : 1;
+    __IO uint32_t PB12                      : 1;
+    __IO uint32_t PB13                      : 1;
+    __IO uint32_t PB14                      : 1;
+    __IO uint32_t PB15                      : 1;
 } stc_gpio_pbads_field_t;
 
 typedef struct
 {
     __IO uint32_t PB00                      : 1;
     __IO uint32_t PB01                      : 1;
-    uint32_t RESERVED2                      : 1;
+    __IO uint32_t PB02                      : 1;
     __IO uint32_t PB03                      : 1;
     __IO uint32_t PB04                      : 1;
     __IO uint32_t PB05                      : 1;
     __IO uint32_t PB06                      : 1;
     __IO uint32_t PB07                      : 1;
-    uint32_t RESERVED8                      : 3;
+    __IO uint32_t PB08                      : 1;
+    __IO uint32_t PB09                      : 1;
+    __IO uint32_t PB10                      : 1;
     __IO uint32_t PB11                      : 1;
+    __IO uint32_t PB12                      : 1;
+    __IO uint32_t PB13                      : 1;
+    __IO uint32_t PB14                      : 1;
+    __IO uint32_t PB15                      : 1;
 } stc_gpio_pbbset_field_t;
 
 typedef struct
 {
     __IO uint32_t PB00                      : 1;
     __IO uint32_t PB01                      : 1;
-    uint32_t RESERVED2                      : 1;
+    __IO uint32_t PB02                      : 1;
     __IO uint32_t PB03                      : 1;
     __IO uint32_t PB04                      : 1;
     __IO uint32_t PB05                      : 1;
     __IO uint32_t PB06                      : 1;
     __IO uint32_t PB07                      : 1;
-    uint32_t RESERVED8                      : 3;
+    __IO uint32_t PB08                      : 1;
+    __IO uint32_t PB09                      : 1;
+    __IO uint32_t PB10                      : 1;
     __IO uint32_t PB11                      : 1;
+    __IO uint32_t PB12                      : 1;
+    __IO uint32_t PB13                      : 1;
+    __IO uint32_t PB14                      : 1;
+    __IO uint32_t PB15                      : 1;
 } stc_gpio_pbbclr_field_t;
 
 typedef struct
@@ -1205,152 +1327,206 @@ typedef struct
 {
     __IO uint32_t PB00                      : 1;
     __IO uint32_t PB01                      : 1;
-    uint32_t RESERVED2                      : 1;
+    __IO uint32_t PB02                      : 1;
     __IO uint32_t PB03                      : 1;
     __IO uint32_t PB04                      : 1;
     __IO uint32_t PB05                      : 1;
     __IO uint32_t PB06                      : 1;
     __IO uint32_t PB07                      : 1;
-    uint32_t RESERVED8                      : 3;
+    __IO uint32_t PB08                      : 1;
+    __IO uint32_t PB09                      : 1;
+    __IO uint32_t PB10                      : 1;
     __IO uint32_t PB11                      : 1;
+    __IO uint32_t PB12                      : 1;
+    __IO uint32_t PB13                      : 1;
+    __IO uint32_t PB14                      : 1;
+    __IO uint32_t PB15                      : 1;
 } stc_gpio_pbdr_field_t;
 
 typedef struct
 {
     __IO uint32_t PB00                      : 1;
     __IO uint32_t PB01                      : 1;
-    uint32_t RESERVED2                      : 1;
+    __IO uint32_t PB02                      : 1;
     __IO uint32_t PB03                      : 1;
     __IO uint32_t PB04                      : 1;
     __IO uint32_t PB05                      : 1;
     __IO uint32_t PB06                      : 1;
     __IO uint32_t PB07                      : 1;
-    uint32_t RESERVED8                      : 3;
+    __IO uint32_t PB08                      : 1;
+    __IO uint32_t PB09                      : 1;
+    __IO uint32_t PB10                      : 1;
     __IO uint32_t PB11                      : 1;
+    __IO uint32_t PB12                      : 1;
+    __IO uint32_t PB13                      : 1;
+    __IO uint32_t PB14                      : 1;
+    __IO uint32_t PB15                      : 1;
 } stc_gpio_pbpu_field_t;
 
 typedef struct
 {
     __IO uint32_t PB00                      : 1;
     __IO uint32_t PB01                      : 1;
-    uint32_t RESERVED2                      : 1;
+    __IO uint32_t PB02                      : 1;
     __IO uint32_t PB03                      : 1;
     __IO uint32_t PB04                      : 1;
     __IO uint32_t PB05                      : 1;
     __IO uint32_t PB06                      : 1;
     __IO uint32_t PB07                      : 1;
-    uint32_t RESERVED8                      : 3;
+    __IO uint32_t PB08                      : 1;
+    __IO uint32_t PB09                      : 1;
+    __IO uint32_t PB10                      : 1;
     __IO uint32_t PB11                      : 1;
+    __IO uint32_t PB12                      : 1;
+    __IO uint32_t PB13                      : 1;
+    __IO uint32_t PB14                      : 1;
+    __IO uint32_t PB15                      : 1;
 } stc_gpio_pbpd_field_t;
 
 typedef struct
 {
     __IO uint32_t PB00                      : 1;
     __IO uint32_t PB01                      : 1;
-    uint32_t RESERVED2                      : 1;
+    __IO uint32_t PB02                      : 1;
     __IO uint32_t PB03                      : 1;
     __IO uint32_t PB04                      : 1;
     __IO uint32_t PB05                      : 1;
     __IO uint32_t PB06                      : 1;
     __IO uint32_t PB07                      : 1;
-    uint32_t RESERVED8                      : 3;
+    __IO uint32_t PB08                      : 1;
+    __IO uint32_t PB09                      : 1;
+    __IO uint32_t PB10                      : 1;
     __IO uint32_t PB11                      : 1;
+    __IO uint32_t PB12                      : 1;
+    __IO uint32_t PB13                      : 1;
+    __IO uint32_t PB14                      : 1;
+    __IO uint32_t PB15                      : 1;
 } stc_gpio_pbod_field_t;
 
 typedef struct
 {
     __IO uint32_t PB00                      : 1;
     __IO uint32_t PB01                      : 1;
-    uint32_t RESERVED2                      : 1;
+    __IO uint32_t PB02                      : 1;
     __IO uint32_t PB03                      : 1;
     __IO uint32_t PB04                      : 1;
     __IO uint32_t PB05                      : 1;
     __IO uint32_t PB06                      : 1;
     __IO uint32_t PB07                      : 1;
-    uint32_t RESERVED8                      : 3;
+    __IO uint32_t PB08                      : 1;
+    __IO uint32_t PB09                      : 1;
+    __IO uint32_t PB10                      : 1;
     __IO uint32_t PB11                      : 1;
+    __IO uint32_t PB12                      : 1;
+    __IO uint32_t PB13                      : 1;
+    __IO uint32_t PB14                      : 1;
+    __IO uint32_t PB15                      : 1;
 } stc_gpio_pbhie_field_t;
 
 typedef struct
 {
     __IO uint32_t PB00                      : 1;
     __IO uint32_t PB01                      : 1;
-    uint32_t RESERVED2                      : 1;
+    __IO uint32_t PB02                      : 1;
     __IO uint32_t PB03                      : 1;
     __IO uint32_t PB04                      : 1;
     __IO uint32_t PB05                      : 1;
     __IO uint32_t PB06                      : 1;
     __IO uint32_t PB07                      : 1;
-    uint32_t RESERVED8                      : 3;
+    __IO uint32_t PB08                      : 1;
+    __IO uint32_t PB09                      : 1;
+    __IO uint32_t PB10                      : 1;
     __IO uint32_t PB11                      : 1;
+    __IO uint32_t PB12                      : 1;
+    __IO uint32_t PB13                      : 1;
+    __IO uint32_t PB14                      : 1;
+    __IO uint32_t PB15                      : 1;
 } stc_gpio_pblie_field_t;
 
 typedef struct
 {
     __IO uint32_t PB00                      : 1;
     __IO uint32_t PB01                      : 1;
-    uint32_t RESERVED2                      : 1;
+    __IO uint32_t PB02                      : 1;
     __IO uint32_t PB03                      : 1;
     __IO uint32_t PB04                      : 1;
     __IO uint32_t PB05                      : 1;
     __IO uint32_t PB06                      : 1;
     __IO uint32_t PB07                      : 1;
-    uint32_t RESERVED8                      : 3;
+    __IO uint32_t PB08                      : 1;
+    __IO uint32_t PB09                      : 1;
+    __IO uint32_t PB10                      : 1;
     __IO uint32_t PB11                      : 1;
+    __IO uint32_t PB12                      : 1;
+    __IO uint32_t PB13                      : 1;
+    __IO uint32_t PB14                      : 1;
+    __IO uint32_t PB15                      : 1;
 } stc_gpio_pbrie_field_t;
 
 typedef struct
 {
     __IO uint32_t PB00                      : 1;
     __IO uint32_t PB01                      : 1;
-    uint32_t RESERVED2                      : 1;
+    __IO uint32_t PB02                      : 1;
     __IO uint32_t PB03                      : 1;
     __IO uint32_t PB04                      : 1;
     __IO uint32_t PB05                      : 1;
     __IO uint32_t PB06                      : 1;
     __IO uint32_t PB07                      : 1;
-    uint32_t RESERVED8                      : 3;
+    __IO uint32_t PB08                      : 1;
+    __IO uint32_t PB09                      : 1;
+    __IO uint32_t PB10                      : 1;
     __IO uint32_t PB11                      : 1;
+    __IO uint32_t PB12                      : 1;
+    __IO uint32_t PB13                      : 1;
+    __IO uint32_t PB14                      : 1;
+    __IO uint32_t PB15                      : 1;
 } stc_gpio_pbfie_field_t;
 
 typedef struct
 {
-    uint32_t RESERVED0                      :14;
+    uint32_t RESERVED0                      :13;
+    __IO uint32_t PC13                      : 1;
     __IO uint32_t PC14                      : 1;
     __IO uint32_t PC15                      : 1;
 } stc_gpio_pcdir_field_t;
 
 typedef struct
 {
-    uint32_t RESERVED0                      :14;
+    uint32_t RESERVED0                      :13;
+    __IO uint32_t PC13                      : 1;
     __IO uint32_t PC14                      : 1;
     __IO uint32_t PC15                      : 1;
 } stc_gpio_pcin_field_t;
 
 typedef struct
 {
-    uint32_t RESERVED0                      :14;
+    uint32_t RESERVED0                      :13;
+    __IO uint32_t PC13                      : 1;
     __IO uint32_t PC14                      : 1;
     __IO uint32_t PC15                      : 1;
 } stc_gpio_pcout_field_t;
 
 typedef struct
 {
-    uint32_t RESERVED0                      :14;
+    uint32_t RESERVED0                      :13;
+    __IO uint32_t PC13                      : 1;
     __IO uint32_t PC14                      : 1;
     __IO uint32_t PC15                      : 1;
 } stc_gpio_pcads_field_t;
 
 typedef struct
 {
-    uint32_t RESERVED0                      :14;
+    uint32_t RESERVED0                      :13;
+    __IO uint32_t PC13                      : 1;
     __IO uint32_t PC14                      : 1;
     __IO uint32_t PC15                      : 1;
 } stc_gpio_pcbset_field_t;
 
 typedef struct
 {
-    uint32_t RESERVED0                      :14;
+    uint32_t RESERVED0                      :13;
+    __IO uint32_t PC13                      : 1;
     __IO uint32_t PC14                      : 1;
     __IO uint32_t PC15                      : 1;
 } stc_gpio_pcbclr_field_t;
@@ -1363,56 +1539,64 @@ typedef struct
 
 typedef struct
 {
-    uint32_t RESERVED0                      :14;
+    uint32_t RESERVED0                      :13;
+    __IO uint32_t PC13                      : 1;
     __IO uint32_t PC14                      : 1;
     __IO uint32_t PC15                      : 1;
 } stc_gpio_pcdr_field_t;
 
 typedef struct
 {
-    uint32_t RESERVED0                      :14;
+    uint32_t RESERVED0                      :13;
+    __IO uint32_t PC13                      : 1;
     __IO uint32_t PC14                      : 1;
     __IO uint32_t PC15                      : 1;
 } stc_gpio_pcpu_field_t;
 
 typedef struct
 {
-    uint32_t RESERVED0                      :14;
+    uint32_t RESERVED0                      :13;
+    __IO uint32_t PC13                      : 1;
     __IO uint32_t PC14                      : 1;
     __IO uint32_t PC15                      : 1;
 } stc_gpio_pcpd_field_t;
 
 typedef struct
 {
-    uint32_t RESERVED0                      :14;
+    uint32_t RESERVED0                      :13;
+    __IO uint32_t PC13                      : 1;
     __IO uint32_t PC14                      : 1;
     __IO uint32_t PC15                      : 1;
 } stc_gpio_pcod_field_t;
 
 typedef struct
 {
-    uint32_t RESERVED0                      :14;
+    uint32_t RESERVED0                      :13;
+    __IO uint32_t PC13                      : 1;
     __IO uint32_t PC14                      : 1;
     __IO uint32_t PC15                      : 1;
 } stc_gpio_pchie_field_t;
 
 typedef struct
 {
-    uint32_t RESERVED0                      :14;
+    uint32_t RESERVED0                      :13;
+    __IO uint32_t PC13                      : 1;
     __IO uint32_t PC14                      : 1;
     __IO uint32_t PC15                      : 1;
 } stc_gpio_pclie_field_t;
 
 typedef struct
 {
-    uint32_t RESERVED0                      :14;
+    uint32_t RESERVED0                      :13;
+    __IO uint32_t PC13                      : 1;
     __IO uint32_t PC14                      : 1;
     __IO uint32_t PC15                      : 1;
 } stc_gpio_pcrie_field_t;
 
 typedef struct
 {
-    uint32_t RESERVED0                      :14;
+    uint32_t RESERVED0                      :13;
+    __IO uint32_t PC13                      : 1;
     __IO uint32_t PC14                      : 1;
     __IO uint32_t PC15                      : 1;
 } stc_gpio_pcfie_field_t;
@@ -1423,6 +1607,9 @@ typedef struct
     __IO uint32_t PD01                      : 1;
     uint32_t RESERVED2                      : 1;
     __IO uint32_t PD03                      : 1;
+    uint32_t RESERVED4                      : 2;
+    __IO uint32_t PD06                      : 1;
+    __IO uint32_t PD07                      : 1;
 } stc_gpio_pddir_field_t;
 
 typedef struct
@@ -1431,6 +1618,9 @@ typedef struct
     __IO uint32_t PD01                      : 1;
     uint32_t RESERVED2                      : 1;
     __IO uint32_t PD03                      : 1;
+    uint32_t RESERVED4                      : 2;
+    __IO uint32_t PD06                      : 1;
+    __IO uint32_t PD07                      : 1;
 } stc_gpio_pdin_field_t;
 
 typedef struct
@@ -1439,6 +1629,9 @@ typedef struct
     __IO uint32_t PD01                      : 1;
     uint32_t RESERVED2                      : 1;
     __IO uint32_t PD03                      : 1;
+    uint32_t RESERVED4                      : 2;
+    __IO uint32_t PD06                      : 1;
+    __IO uint32_t PD07                      : 1;
 } stc_gpio_pdout_field_t;
 
 typedef struct
@@ -1447,6 +1640,9 @@ typedef struct
     __IO uint32_t PD01                      : 1;
     uint32_t RESERVED2                      : 1;
     __IO uint32_t PD03                      : 1;
+    uint32_t RESERVED4                      : 2;
+    __IO uint32_t PD06                      : 1;
+    __IO uint32_t PD07                      : 1;
 } stc_gpio_pdads_field_t;
 
 typedef struct
@@ -1455,6 +1651,9 @@ typedef struct
     __IO uint32_t PD01                      : 1;
     uint32_t RESERVED2                      : 1;
     __IO uint32_t PD03                      : 1;
+    uint32_t RESERVED4                      : 2;
+    __IO uint32_t PD06                      : 1;
+    __IO uint32_t PD07                      : 1;
 } stc_gpio_pdbset_field_t;
 
 typedef struct
@@ -1463,6 +1662,9 @@ typedef struct
     __IO uint32_t PD01                      : 1;
     uint32_t RESERVED2                      : 1;
     __IO uint32_t PD03                      : 1;
+    uint32_t RESERVED4                      : 2;
+    __IO uint32_t PD06                      : 1;
+    __IO uint32_t PD07                      : 1;
 } stc_gpio_pdbclr_field_t;
 
 typedef struct
@@ -1478,6 +1680,9 @@ typedef struct
     __IO uint32_t PD01                      : 1;
     uint32_t RESERVED2                      : 1;
     __IO uint32_t PD03                      : 1;
+    uint32_t RESERVED4                      : 2;
+    __IO uint32_t PD06                      : 1;
+    __IO uint32_t PD07                      : 1;
 } stc_gpio_pddr_field_t;
 
 typedef struct
@@ -1486,6 +1691,9 @@ typedef struct
     __IO uint32_t PD01                      : 1;
     uint32_t RESERVED2                      : 1;
     __IO uint32_t PD03                      : 1;
+    uint32_t RESERVED4                      : 2;
+    __IO uint32_t PD06                      : 1;
+    __IO uint32_t PD07                      : 1;
 } stc_gpio_pdpu_field_t;
 
 typedef struct
@@ -1494,6 +1702,9 @@ typedef struct
     __IO uint32_t PD01                      : 1;
     uint32_t RESERVED2                      : 1;
     __IO uint32_t PD03                      : 1;
+    uint32_t RESERVED4                      : 2;
+    __IO uint32_t PD06                      : 1;
+    __IO uint32_t PD07                      : 1;
 } stc_gpio_pdpd_field_t;
 
 typedef struct
@@ -1502,6 +1713,9 @@ typedef struct
     __IO uint32_t PD01                      : 1;
     uint32_t RESERVED2                      : 1;
     __IO uint32_t PD03                      : 1;
+    uint32_t RESERVED4                      : 2;
+    __IO uint32_t PD06                      : 1;
+    __IO uint32_t PD07                      : 1;
 } stc_gpio_pdod_field_t;
 
 typedef struct
@@ -1510,6 +1724,9 @@ typedef struct
     __IO uint32_t PD01                      : 1;
     uint32_t RESERVED2                      : 1;
     __IO uint32_t PD03                      : 1;
+    uint32_t RESERVED4                      : 2;
+    __IO uint32_t PD06                      : 1;
+    __IO uint32_t PD07                      : 1;
 } stc_gpio_pdhie_field_t;
 
 typedef struct
@@ -1518,6 +1735,9 @@ typedef struct
     __IO uint32_t PD01                      : 1;
     uint32_t RESERVED2                      : 1;
     __IO uint32_t PD03                      : 1;
+    uint32_t RESERVED4                      : 2;
+    __IO uint32_t PD06                      : 1;
+    __IO uint32_t PD07                      : 1;
 } stc_gpio_pdlie_field_t;
 
 typedef struct
@@ -1526,6 +1746,9 @@ typedef struct
     __IO uint32_t PD01                      : 1;
     uint32_t RESERVED2                      : 1;
     __IO uint32_t PD03                      : 1;
+    uint32_t RESERVED4                      : 2;
+    __IO uint32_t PD06                      : 1;
+    __IO uint32_t PD07                      : 1;
 } stc_gpio_pdrie_field_t;
 
 typedef struct
@@ -1534,13 +1757,17 @@ typedef struct
     __IO uint32_t PD01                      : 1;
     uint32_t RESERVED2                      : 1;
     __IO uint32_t PD03                      : 1;
+    uint32_t RESERVED4                      : 2;
+    __IO uint32_t PD06                      : 1;
+    __IO uint32_t PD07                      : 1;
 } stc_gpio_pdfie_field_t;
 
 typedef struct
 {
-    uint32_t RESERVED0                      : 2;
+    __IO uint32_t PA00                      : 1;
+    __IO uint32_t PA01                      : 1;
     __IO uint32_t PA02                      : 1;
-    uint32_t RESERVED3                      : 1;
+    __IO uint32_t PA03                      : 1;
     __IO uint32_t PA04                      : 1;
     __IO uint32_t PA05                      : 1;
     __IO uint32_t PA06                      : 1;
@@ -1557,9 +1784,10 @@ typedef struct
 
 typedef struct
 {
-    uint32_t RESERVED0                      : 2;
+    __IO uint32_t PA00                      : 1;
+    __IO uint32_t PA01                      : 1;
     __IO uint32_t PA02                      : 1;
-    uint32_t RESERVED3                      : 1;
+    __IO uint32_t PA03                      : 1;
     __IO uint32_t PA04                      : 1;
     __IO uint32_t PA05                      : 1;
     __IO uint32_t PA06                      : 1;
@@ -1578,40 +1806,54 @@ typedef struct
 {
     __IO uint32_t PB00                      : 1;
     __IO uint32_t PB01                      : 1;
-    uint32_t RESERVED2                      : 1;
+    __IO uint32_t PB02                      : 1;
     __IO uint32_t PB03                      : 1;
     __IO uint32_t PB04                      : 1;
     __IO uint32_t PB05                      : 1;
     __IO uint32_t PB06                      : 1;
     __IO uint32_t PB07                      : 1;
-    uint32_t RESERVED8                      : 3;
+    __IO uint32_t PB08                      : 1;
+    __IO uint32_t PB09                      : 1;
+    __IO uint32_t PB10                      : 1;
     __IO uint32_t PB11                      : 1;
+    __IO uint32_t PB12                      : 1;
+    __IO uint32_t PB13                      : 1;
+    __IO uint32_t PB14                      : 1;
+    __IO uint32_t PB15                      : 1;
 } stc_gpio_pb_stat_field_t;
 
 typedef struct
 {
     __IO uint32_t PB00                      : 1;
     __IO uint32_t PB01                      : 1;
-    uint32_t RESERVED2                      : 1;
+    __IO uint32_t PB02                      : 1;
     __IO uint32_t PB03                      : 1;
     __IO uint32_t PB04                      : 1;
     __IO uint32_t PB05                      : 1;
     __IO uint32_t PB06                      : 1;
     __IO uint32_t PB07                      : 1;
-    uint32_t RESERVED8                      : 3;
+    __IO uint32_t PB08                      : 1;
+    __IO uint32_t PB09                      : 1;
+    __IO uint32_t PB10                      : 1;
     __IO uint32_t PB11                      : 1;
+    __IO uint32_t PB12                      : 1;
+    __IO uint32_t PB13                      : 1;
+    __IO uint32_t PB14                      : 1;
+    __IO uint32_t PB15                      : 1;
 } stc_gpio_pb_iclr_field_t;
 
 typedef struct
 {
-    uint32_t RESERVED0                      :14;
+    uint32_t RESERVED0                      :13;
+    __IO uint32_t PC13                      : 1;
     __IO uint32_t PC14                      : 1;
     __IO uint32_t PC15                      : 1;
 } stc_gpio_pc_stat_field_t;
 
 typedef struct
 {
-    uint32_t RESERVED0                      :14;
+    uint32_t RESERVED0                      :13;
+    __IO uint32_t PC13                      : 1;
     __IO uint32_t PC14                      : 1;
     __IO uint32_t PC15                      : 1;
 } stc_gpio_pc_iclr_field_t;
@@ -1622,6 +1864,9 @@ typedef struct
     __IO uint32_t PD01                      : 1;
     uint32_t RESERVED2                      : 1;
     __IO uint32_t PD03                      : 1;
+    uint32_t RESERVED4                      : 2;
+    __IO uint32_t PD06                      : 1;
+    __IO uint32_t PD07                      : 1;
 } stc_gpio_pd_stat_field_t;
 
 typedef struct
@@ -1630,6 +1875,9 @@ typedef struct
     __IO uint32_t PD01                      : 1;
     uint32_t RESERVED2                      : 1;
     __IO uint32_t PD03                      : 1;
+    uint32_t RESERVED4                      : 2;
+    __IO uint32_t PD06                      : 1;
+    __IO uint32_t PD07                      : 1;
 } stc_gpio_pd_iclr_field_t;
 
 typedef struct
@@ -1651,6 +1899,8 @@ typedef struct
 typedef struct
 {
     __IO uint32_t SSN1_SEL                  : 4;
+    uint32_t RESERVED4                      :11;
+    __IO uint32_t AHB_SEL                   : 1;
 } stc_gpio_ctrl2_field_t;
 
 typedef struct
@@ -1870,6 +2120,60 @@ typedef struct
     __IO uint32_t INTF                      : 1;
     __IO uint32_t FILTER                    : 1;
 } stc_lvd_ifr_field_t;
+
+typedef struct
+{
+    __IO uint32_t EN                        : 1;
+    __IO uint32_t AZEN                      : 1;
+    __IO uint32_t MODE                      : 1;
+    __IO uint32_t UBUFSEL                   : 1;
+    __IO uint32_t RESSEL                    : 1;
+    __IO uint32_t BIASSEL                   : 3;
+    __IO uint32_t NEGSEL                    : 2;
+    __IO uint32_t POSSEL                    : 2;
+    __IO uint32_t PGAGAIN                   : 3;
+    __IO uint32_t POEN                      : 1;
+    __IO uint32_t RESINMUX                  : 2;
+} stc_opa_cr0_field_t;
+
+typedef struct
+{
+    __IO uint32_t EN                        : 1;
+    __IO uint32_t AZEN                      : 1;
+    __IO uint32_t MODE                      : 1;
+    __IO uint32_t UBUFSEL                   : 1;
+    __IO uint32_t RESSEL                    : 1;
+    __IO uint32_t BIASSEL                   : 3;
+    __IO uint32_t NEGSEL                    : 2;
+    __IO uint32_t POSSEL                    : 2;
+    __IO uint32_t PGAGAIN                   : 3;
+    __IO uint32_t POEN                      : 1;
+    __IO uint32_t RESINMUX                  : 2;
+} stc_opa_cr1_field_t;
+
+typedef struct
+{
+    __IO uint32_t EN                        : 1;
+    __IO uint32_t AZEN                      : 1;
+    __IO uint32_t MODE                      : 1;
+    __IO uint32_t UBUFSEL                   : 1;
+    __IO uint32_t RESSEL                    : 1;
+    __IO uint32_t BIASSEL                   : 3;
+    __IO uint32_t NEGSEL                    : 2;
+    __IO uint32_t POSSEL                    : 2;
+    __IO uint32_t PGAGAIN                   : 3;
+    __IO uint32_t POEN                      : 1;
+    __IO uint32_t RESINMUX                  : 2;
+} stc_opa_cr2_field_t;
+
+typedef struct
+{
+    __IO uint8_t ADCTR_EN                   : 1;
+    __IO uint8_t TRIGGER                    : 1;
+    __IO uint8_t AZ_PULSE                   : 1;
+    __IO uint8_t CLK_SW_SET                 : 1;
+    __IO uint8_t CLK_SEL                    : 4;
+} stc_opa_cr_field_t;
 
 typedef struct
 {
@@ -2202,7 +2506,8 @@ typedef struct
     __IO uint32_t LPTIM                     : 1;
     __IO uint32_t ADVTIM                    : 1;
     __IO uint32_t TIM3                      : 1;
-    uint32_t RESERVED12                     : 2;
+    uint32_t RESERVED12                     : 1;
+    __IO uint32_t OPA                       : 1;
     __IO uint32_t PCA                       : 1;
     uint32_t RESERVED15                     : 1;
     __IO uint32_t ADC                       : 1;
@@ -2458,7 +2763,8 @@ typedef struct
     __IO uint32_t LPTIM                     : 1;
     __IO uint32_t ADVTIM                    : 1;
     __IO uint32_t TIM3                      : 1;
-    uint32_t RESERVED12                     : 2;
+    uint32_t RESERVED12                     : 1;
+    __IO uint32_t OPA                       : 1;
     __IO uint32_t PCA                       : 1;
     __IO uint32_t WDT                       : 1;
     __IO uint32_t ADC                       : 1;
@@ -5678,13 +5984,26 @@ typedef struct
 
 typedef struct
 {
-    uint8_t RESERVED0[8];
+    union
+    {
+        __IO uint32_t PA00_SEL;
+        stc_gpio_pa00_sel_field_t PA00_SEL_f;
+    };
+    union
+    {
+        __IO uint32_t PA01_SEL;
+        stc_gpio_pa01_sel_field_t PA01_SEL_f;
+    };
     union
     {
         __IO uint32_t PA02_SEL;
         stc_gpio_pa02_sel_field_t PA02_SEL_f;
     };
-    uint8_t RESERVED1[4];
+    union
+    {
+        __IO uint32_t PA03_SEL;
+        stc_gpio_pa03_sel_field_t PA03_SEL_f;
+    };
     union
     {
         __IO uint32_t PA04_SEL;
@@ -5755,7 +6074,11 @@ typedef struct
         __IO uint32_t PB01_SEL;
         stc_gpio_pb01_sel_field_t PB01_SEL_f;
     };
-    uint8_t RESERVED15[4];
+    union
+    {
+        __IO uint32_t PB02_SEL;
+        stc_gpio_pb02_sel_field_t PB02_SEL_f;
+    };
     union
     {
         __IO uint32_t PB03_SEL;
@@ -5781,13 +6104,52 @@ typedef struct
         __IO uint32_t PB07_SEL;
         stc_gpio_pb07_sel_field_t PB07_SEL_f;
     };
-    uint8_t RESERVED20[12];
+    union
+    {
+        __IO uint32_t PB08_SEL;
+        stc_gpio_pb08_sel_field_t PB08_SEL_f;
+    };
+    union
+    {
+        __IO uint32_t PB09_SEL;
+        stc_gpio_pb09_sel_field_t PB09_SEL_f;
+    };
+    union
+    {
+        __IO uint32_t PB10_SEL;
+        stc_gpio_pb10_sel_field_t PB10_SEL_f;
+    };
     union
     {
         __IO uint32_t PB11_SEL;
         stc_gpio_pb11_sel_field_t PB11_SEL_f;
     };
-    uint8_t RESERVED21[72];
+    union
+    {
+        __IO uint32_t PB12_SEL;
+        stc_gpio_pb12_sel_field_t PB12_SEL_f;
+    };
+    union
+    {
+        __IO uint32_t PB13_SEL;
+        stc_gpio_pb13_sel_field_t PB13_SEL_f;
+    };
+    union
+    {
+        __IO uint32_t PB14_SEL;
+        stc_gpio_pb14_sel_field_t PB14_SEL_f;
+    };
+    union
+    {
+        __IO uint32_t PB15_SEL;
+        stc_gpio_pb15_sel_field_t PB15_SEL_f;
+    };
+    uint8_t RESERVED32[52];
+    union
+    {
+        __IO uint32_t PC13_SEL;
+        stc_gpio_pc13_sel_field_t PC13_SEL_f;
+    };
     union
     {
         __IO uint32_t PC14_SEL;
@@ -5808,13 +6170,24 @@ typedef struct
         __IO uint32_t PD01_SEL;
         stc_gpio_pd01_sel_field_t PD01_SEL_f;
     };
-    uint8_t RESERVED25[4];
+    uint8_t RESERVED37[4];
     union
     {
         __IO uint32_t PD03_SEL;
         stc_gpio_pd03_sel_field_t PD03_SEL_f;
     };
-    uint8_t RESERVED26[48];
+    uint8_t RESERVED38[8];
+    union
+    {
+        __IO uint32_t PD06_SEL;
+        stc_gpio_pd06_sel_field_t PD06_SEL_f;
+    };
+    union
+    {
+        __IO uint32_t PD07_SEL;
+        stc_gpio_pd07_sel_field_t PD07_SEL_f;
+    };
+    uint8_t RESERVED40[32];
     union
     {
         __IO uint32_t PADIR;
@@ -5865,7 +6238,7 @@ typedef struct
         __IO uint32_t PAPD;
         stc_gpio_papd_field_t PAPD_f;
     };
-    uint8_t RESERVED36[4];
+    uint8_t RESERVED50[4];
     union
     {
         __IO uint32_t PAOD;
@@ -5941,7 +6314,7 @@ typedef struct
         __IO uint32_t PBPD;
         stc_gpio_pbpd_field_t PBPD_f;
     };
-    uint8_t RESERVED51[4];
+    uint8_t RESERVED65[4];
     union
     {
         __IO uint32_t PBOD;
@@ -6017,7 +6390,7 @@ typedef struct
         __IO uint32_t PCPD;
         stc_gpio_pcpd_field_t PCPD_f;
     };
-    uint8_t RESERVED66[4];
+    uint8_t RESERVED80[4];
     union
     {
         __IO uint32_t PCOD;
@@ -6093,7 +6466,7 @@ typedef struct
         __IO uint32_t PDPD;
         stc_gpio_pdpd_field_t PDPD_f;
     };
-    uint8_t RESERVED81[4];
+    uint8_t RESERVED95[4];
     union
     {
         __IO uint32_t PDOD;
@@ -6124,49 +6497,49 @@ typedef struct
         __IO uint32_t PA_STAT;
         stc_gpio_pa_stat_field_t PA_STAT_f;
     };
-    uint8_t RESERVED87[12];
+    uint8_t RESERVED101[12];
     union
     {
         __IO uint32_t PA_ICLR;
         stc_gpio_pa_iclr_field_t PA_ICLR_f;
     };
-    uint8_t RESERVED88[44];
+    uint8_t RESERVED102[44];
     union
     {
         __IO uint32_t PB_STAT;
         stc_gpio_pb_stat_field_t PB_STAT_f;
     };
-    uint8_t RESERVED89[12];
+    uint8_t RESERVED103[12];
     union
     {
         __IO uint32_t PB_ICLR;
         stc_gpio_pb_iclr_field_t PB_ICLR_f;
     };
-    uint8_t RESERVED90[44];
+    uint8_t RESERVED104[44];
     union
     {
         __IO uint32_t PC_STAT;
         stc_gpio_pc_stat_field_t PC_STAT_f;
     };
-    uint8_t RESERVED91[12];
+    uint8_t RESERVED105[12];
     union
     {
         __IO uint32_t PC_ICLR;
         stc_gpio_pc_iclr_field_t PC_ICLR_f;
     };
-    uint8_t RESERVED92[44];
+    uint8_t RESERVED106[44];
     union
     {
         __IO uint32_t PD_STAT;
         stc_gpio_pd_stat_field_t PD_STAT_f;
     };
-    uint8_t RESERVED93[12];
+    uint8_t RESERVED107[12];
     union
     {
         __IO uint32_t PD_ICLR;
         stc_gpio_pd_iclr_field_t PD_ICLR_f;
     };
-    uint8_t RESERVED94[44];
+    uint8_t RESERVED108[44];
     union
     {
         __IO uint32_t CTRL0;
@@ -6355,6 +6728,31 @@ typedef struct
         stc_lvd_ifr_field_t IFR_f;
     };
 }M0P_LVD_TypeDef;
+
+typedef struct
+{
+    uint8_t RESERVED0[48];
+    union
+    {
+        __IO uint32_t CR0;
+        stc_opa_cr0_field_t CR0_f;
+    };
+    union
+    {
+        __IO uint32_t CR1;
+        stc_opa_cr1_field_t CR1_f;
+    };
+    union
+    {
+        __IO uint32_t CR2;
+        stc_opa_cr2_field_t CR2_f;
+    };
+    union
+    {
+        __IO uint8_t CR;
+        stc_opa_cr_field_t CR_f;
+    };
+}M0P_OPA_TypeDef;
 
 typedef struct
 {
@@ -8191,6 +8589,7 @@ typedef struct
 #define M0P_LPUART0_BASE                       (M0P_PERIPH_BASE + 0x00000200UL)
 #define M0P_LPUART1_BASE                       (M0P_PERIPH_BASE + 0x00004000UL)
 #define M0P_LVD_BASE                           (M0P_PERIPH_BASE + 0x00002400UL)
+#define M0P_OPA_BASE                           (M0P_PERIPH_BASE + 0x00002400UL)
 #define M0P_PCA_BASE                           (M0P_PERIPH_BASE + 0x00001000UL)
 #define M0P_PCNT_BASE                          (M0P_PERIPH_BASE + 0x00005400UL)
 #define M0P_RAM_BASE                           (M0P_PERIPH_BASE + 0x00020400UL)
@@ -8237,6 +8636,7 @@ typedef struct
 #define M0P_LPUART0                            ((M0P_LPUART_TypeDef *)0x40000200UL)
 #define M0P_LPUART1                            ((M0P_LPUART_TypeDef *)0x40004000UL)
 #define M0P_LVD                                ((M0P_LVD_TypeDef *)0x40002400UL)
+#define M0P_OPA                                ((M0P_OPA_TypeDef *)0x40002400UL)
 #define M0P_PCA                                ((M0P_PCA_TypeDef *)0x40001000UL)
 #define M0P_PCNT                               ((M0P_PCNT_TypeDef *)0x40005400UL)
 #define M0P_RAM                                ((M0P_RAM_TypeDef *)0x40020400UL)
@@ -8271,5 +8671,5 @@ typedef struct
 }
 #endif
 
-#endif /* __HC32L130F8UA_H__ */
+#endif /* __HC32L130J8_H__ */
 
